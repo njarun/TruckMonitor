@@ -54,5 +54,7 @@ jobs:
           path: AppModule/build/reports/coverage/androidTest/debug
         
       - name: Upload Test Report
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
         run:  bash <(curl -s https://codecov.io/bash) -f "AppModule/build/reports/coverage/androidTest/debug/report.xml"
         #
