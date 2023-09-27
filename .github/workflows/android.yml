@@ -29,6 +29,10 @@ jobs:
           distribution: "zulu"
           java-version: 11
 
+      # Just in case git is not retaining its props.
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
+
        # Execute unit tests
       - name: Unit Test with Android Emulator Runner
         uses: reactivecircus/android-emulator-runner@v2
