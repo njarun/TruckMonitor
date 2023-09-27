@@ -1,44 +1,210 @@
 plugins {
+
     id 'com.android.application'
-    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-android'
+    id "kotlin-kapt"
+    id 'kotlin-parcelize'
+    id 'androidx.navigation.safeargs'
+    id 'dagger.hilt.android.plugin'
+    id 'jacoco'
+}
+
+tasks.withType(Test) {
+    jacoco {
+        includeNoLocationClasses = true
+        excludes = ['jdk.internal.*'] // Allows it to run on Java 11
+    }
+}
+
+task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest', 'createDebugCoverageReport']) {
+
+    reports {
+        xml.enabled = true
+        html.enabled = true
+        xml.enabled true
+    }
+
+    def fileFilter = ['**/R.class', '**/R$*.class', '**/BuildConfig.*', '**/Manifest*.*', '**/*Test*.*', 'android/**/*.*']
+    def debugTree = fileTree(dir: "${buildDir}/intermediates/classes/debug", excludes: fileFilter)
+    def mainSrc = "${project.projectDir}/src/main/java"
+
+    sourceDirectories.setFrom(files([mainSrc]))
+    classDirectories.setFrom(files([debugTree]))
+    executionData.setFrom(fileTree(dir: "$buildDir", includes: [
+            "jacoco/testDebugUnitTest.exec",
+            "outputs/code-coverage/connected/*coverage.ec"
+    ]))
 }
 
 android {
-    namespace 'com.dxb.truckmonitor'
-    compileSdk 32
+
+    namespace APP_PACKAGE_NAME
+    compileSdkVersion PROJECT_SDK_VERSION
 
     defaultConfig {
-        applicationId "com.dxb.truckmonitor"
-        minSdk 21
-        targetSdk 32
-        versionCode 1
-        versionName "1.0"
+
+        applicationId APP_PACKAGE_NAME
+        minSdkVersion MIN_SDK_VERSION
+        targetSdkVersion PROJECT_SDK_VERSION
+        versionCode APP_VERSION_CODE
+        versionName APP_VERSION_NAME
+
+        vectorDrawables {
+            useSupportLibrary true
+        }
+
+        kapt {
+            arguments {
+                arg("room.schemaLocation", "$projectDir/schemas")
+            }
+        }
+
+        buildFeatures {
+
+            dataBinding = true
+            viewBinding = true
+        }
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+    testOptions {
+
+        animationsDisabled true
+
+        unitTests.all {
+            jacoco {
+                includeNoLocationClasses = true
+            }
+        }
+
+        unitTests.includeAndroidResources = true
+        unitTests.returnDefaultValues = true
+    }
+
+    bundle {
+
+        language {
+            enableSplit = false
         }
     }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+
+    signingConfigs { //Dummy test key! -- nj
+
+        release {
+            storeFile file("test_key")
+            storePassword 'test_key'
+            keyAlias 'test_key'
+            keyPassword 'test_key'
+        }
     }
+
+    buildTypes {
+
+        debug {
+
+            testCoverageEnabled true
+        }
+
+        release {
+
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+            signingConfig signingConfigs.release
+        }
+    }
+
+    lintOptions {
+
+        checkReleaseBuilds false
+        disable 'MissingTranslation'
+    }
+
+    compileOptions {
+
+        sourceCompatibility JAVA_VERSION
+        targetCompatibility JAVA_VERSION
+    }
+
     kotlinOptions {
-        jvmTarget = '1.8'
+
+        jvmTarget = JAVA_VERSION
+    }
+
+    packagingOptions {
+
+        resources {
+
+            excludes += '/META-INF/{AL2.0,LGPL2.1}'
+        }
     }
 }
 
 dependencies {
 
-    implementation 'androidx.core:core-ktx:1.7.0'
-    implementation 'androidx.appcompat:appcompat:1.5.1'
-    implementation 'com.google.android.material:material:1.7.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+
     testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.4'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
+    testImplementation 'org.mockito.kotlin:mockito-kotlin:4.0.0'
+    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4'
+    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4'
+    testImplementation "androidx.arch.core:core-testing:2.2.0"
+    testImplementation 'org.mockito:mockito-core:4.6.1'
+    testImplementation 'org.hamcrest:hamcrest-library:2.2'
+    testImplementation 'org.mockito:mockito-inline:4.6.1'
+    testImplementation "com.google.truth:truth:1.1.3"
+    androidTestImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4'
+    androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.3.0'
+    androidTestImplementation "androidx.arch.core:core-testing:2.1.0"
+    androidTestImplementation 'org.mockito:mockito-android:4.6.1'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation "com.google.truth:truth:1.1.3"
+    androidTestImplementation 'androidx.test.ext:junit:1.2.0-alpha01'
+    implementation 'androidx.test.ext:junit-ktx:1.2.0-alpha01'
+    implementation 'androidx.test:runner:1.5.2'
+
+    implementation 'androidx.core:core-ktx:1.8.0'
+    implementation 'androidx.activity:activity-ktx:1.5.1'
+    implementation 'androidx.fragment:fragment-ktx:1.5.1'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.5.1'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.5.1'
+    implementation "androidx.preference:preference-ktx:1.2.0"
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.5.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.0-alpha01'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'androidx.appcompat:appcompat:1.4.2'
+    implementation 'com.google.android.material:material:1.6.1'
+    implementation 'javax.annotation:javax.annotation-api:1.3.2'
+
+    //hilt
+    implementation('com.google.dagger:hilt-android:2.43')
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.0-alpha01'
+    kapt('com.google.dagger:hilt-android-compiler:2.43')
+
+    //logger
+    implementation 'com.jakewharton.timber:timber:5.0.1'
+
+    //REST
+    implementation "com.squareup.retrofit2:retrofit:2.9.0"
+    implementation "com.squareup.retrofit2:converter-gson:2.9.0"
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.9.0'
+    implementation("com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.7")
+
+    //room
+    implementation "androidx.room:room-runtime:2.4.2"
+    kapt "androidx.room:room-compiler:2.4.2"
+    implementation "androidx.room:room-ktx:2.4.2"
+    implementation "androidx.room:room-rxjava2:2.4.2"
+    testImplementation "androidx.room:room-testing:2.4.2"
+
+    //glide
+    implementation 'com.github.bumptech.glide:glide:4.13.2'
+    kapt 'com.github.bumptech.glide:compiler:4.13.2'
+    implementation 'com.github.bumptech.glide:okhttp3-integration:4.13.2'
+}
+
+kapt {
+    correctErrorTypes = true
 }
