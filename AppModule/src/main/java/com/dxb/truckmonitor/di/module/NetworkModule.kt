@@ -1,7 +1,6 @@
 package com.dxb.truckmonitor.di.module
 
 import com.dxb.truckmonitor.BuildConfig
-import com.dxb.truckmonitor.data.router.CoroutineDispatcherProvider
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -39,7 +38,4 @@ object NetworkModule {
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()
     }
-
-    @Provides
-    fun provideCoroutineDispatcher() = CoroutineDispatcherProvider()
 }

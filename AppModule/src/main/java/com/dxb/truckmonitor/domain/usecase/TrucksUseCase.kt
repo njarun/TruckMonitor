@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class FirebaseGetFeeds @Inject constructor(
+class TrucksUseCase @Inject constructor(
     private val trucksRepository: TrucksRepository,
     private val coroutineDispatcherProvider: CoroutineDispatcherProvider
 ) {
