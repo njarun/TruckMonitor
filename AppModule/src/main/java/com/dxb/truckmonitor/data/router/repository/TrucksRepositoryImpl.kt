@@ -1,8 +1,8 @@
 package com.dxb.truckmonitor.data.router.repository
 
-import com.dxb.truckmonitor.data.dto.model.TruckModel
 import com.dxb.truckmonitor.data.router.factory.DataFactory
 import com.dxb.truckmonitor.data.router.factory.Source
+import com.dxb.truckmonitor.domain.router.dto.model.TruckModel
 import com.dxb.truckmonitor.domain.router.repository.TrucksRepository
 import javax.inject.Inject
 

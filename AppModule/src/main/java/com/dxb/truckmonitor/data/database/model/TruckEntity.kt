@@ -12,5 +12,5 @@ data class TruckEntity(
     val lng: Double,
     val location: String?,
     val imageURL: String?,
-    val lastUpdated: String?
+    val lastUpdated: Long
 )

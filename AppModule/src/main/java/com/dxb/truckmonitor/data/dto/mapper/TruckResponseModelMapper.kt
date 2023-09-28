@@ -1,13 +1,13 @@
 package com.dxb.truckmonitor.data.dto.mapper
 
-import com.dxb.truckmonitor.data.database.model.TruckEntity
+import com.dxb.truckmonitor.data.dto.model.TruckResponseModel
 import com.dxb.truckmonitor.data.session.SessionContext
 import com.dxb.truckmonitor.domain.router.dto.model.TruckModel
 import com.dxb.truckmonitor.utils.Utility
 
-object TruckEntityModelMapper {
+object TruckResponseModelMapper {
 
-    fun List<TruckEntity>.toModelList(sessionContext: SessionContext): ArrayList<TruckModel> {
+    fun List<TruckResponseModel>.toModelList(sessionContext: SessionContext): ArrayList<TruckModel> {
 
         val modelList = ArrayList<TruckModel>()
 
@@ -21,7 +21,7 @@ object TruckEntityModelMapper {
                     it.lng,
                     it.location,
                     it.imageURL,
-                    it.lastUpdated
+                    Utility.parseDateStringToMilliseconds(it.lastUpdated)
                 )
             )
         }

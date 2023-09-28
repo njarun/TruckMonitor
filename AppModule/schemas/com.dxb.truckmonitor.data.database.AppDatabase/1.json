@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "2f4adbda2f7620342c66e85f9ee3e667",
+    "identityHash": "97850b352bb02088d2c9fdb5c1767bb7",
     "entities": [
       {
         "tableName": "trucks",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`plateNo` TEXT NOT NULL, `driverName` TEXT, `lat` REAL NOT NULL, `lng` REAL NOT NULL, `location` TEXT, `imageURL` TEXT, `lastUpdated` TEXT, PRIMARY KEY(`plateNo`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`plateNo` TEXT NOT NULL, `driverName` TEXT, `lat` REAL NOT NULL, `lng` REAL NOT NULL, `location` TEXT, `imageURL` TEXT, `lastUpdated` INTEGER NOT NULL, PRIMARY KEY(`plateNo`))",
         "fields": [
           {
             "fieldPath": "plateNo",
@@ -47,8 +47,8 @@
           {
             "fieldPath": "lastUpdated",
             "columnName": "lastUpdated",
-            "affinity": "TEXT",
-            "notNull": false
+            "affinity": "INTEGER",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -64,7 +64,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '2f4adbda2f7620342c66e85f9ee3e667')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '97850b352bb02088d2c9fdb5c1767bb7')"
     ]
   }
 }

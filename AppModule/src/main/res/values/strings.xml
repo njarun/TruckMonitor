@@ -30,5 +30,6 @@
     <string name="dashboard_title">Truck Monitor</string>
     <string name="list">List</string>
     <string name="map">Map</string>
+    <string name="truck_item_image">Truck/Driver image</string>
 
 </resources>

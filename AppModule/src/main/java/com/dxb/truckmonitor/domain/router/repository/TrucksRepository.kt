@@ -1,6 +1,6 @@
 package com.dxb.truckmonitor.domain.router.repository
 
-import com.dxb.truckmonitor.data.dto.model.TruckModel
+import com.dxb.truckmonitor.domain.router.dto.model.TruckModel
 
 interface TrucksRepository {
 

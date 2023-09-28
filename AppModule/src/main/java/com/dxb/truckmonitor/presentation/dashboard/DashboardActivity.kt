@@ -19,5 +19,10 @@ class DashboardActivity : BaseActivity<ActivityDashboardBinding, DashboardViewMo
             fragmentManager = supportFragmentManager
             viewModel = this@DashboardActivity.viewModel
         }
+
+        viewModel.truckList.observe(this) {
+
+            println("Total trucks - ${it.count()}")
+        }
     }
 }

@@ -1,7 +1,7 @@
 package com.dxb.truckmonitor.domain.usecase
 
-import com.dxb.truckmonitor.data.dto.model.TruckModel
 import com.dxb.truckmonitor.data.router.CoroutineDispatcherProvider
+import com.dxb.truckmonitor.domain.router.dto.model.TruckModel
 import com.dxb.truckmonitor.domain.router.repository.TrucksRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.flow

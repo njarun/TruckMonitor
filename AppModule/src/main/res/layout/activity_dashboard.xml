@@ -42,7 +42,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center_vertical"
-            android:background="@color/purple_500"
+            android:background="@color/purple_700"
             app:fragmentManager="@{fragmentManager}"
             app:navHostId="@{@id/host_main}"
             app:itemIconTint="@color/md_white_1000"

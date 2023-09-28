@@ -4,7 +4,7 @@
     <style name="Theme.TruckMonitor" parent="Theme.MaterialComponents.Light.NoActionBar">
 
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_500</item>
+        <item name="colorPrimary">@color/purple_700</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
         <item name="colorOnPrimary">@color/white</item>
 
@@ -24,6 +24,12 @@
 
     <style name="AppTheme.PopupTheme" parent="ThemeOverlay.AppCompat.Light">
         <item name="android:textColor">@color/black</item>
+    </style>
+
+    <!--Material Circle Image style-->
+    <style name="ShapeCircle" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerFamily">cut</item>
+        <item name="cornerSize">4dp</item>
     </style>
 
 </resources>
