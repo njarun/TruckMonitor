@@ -1,3 +1,33 @@
 <resources>
+
     <string name="app_name">Truck Monitor</string>
+
+    <!-- Generic Strings -->
+    <string name="please_wait">Please wait</string>
+    <string name="out_of_scope_functionalities">Feature planned for upcoming release!</string>
+
+    <!-- Server Strings -->
+    <string name="server_not_reachable">Server not reachable</string>
+    <string name="server_connection_error">Cannot connect to server!</string>
+    <string name="error_while_processing">Error while processing</string>
+    <string name="no_data_found">No data found</string>
+    <string name="no_internet_error">You do not have internet access</string>
+
+    <!-- Exceptions -->
+    <string name="error_general">Error while processing</string>
+    <string name="invalid_toast_msg">Invalid Toast Message</string>
+    <string name="general_user_error">Something went wrong, please try again later!</string>
+    <string name="login_failed">Login failed for credentials, try again!</string>
+    <string name="registration_failed">Registration failed, try again!</string>
+    <string name="logout_failed">Unable to logout, try again later!</string>
+
+    <!-- Contextual Descriptions -->
+    <string name="splash_image">Splash image</string>
+    <string name="sort_icon">Sort trucks</string>
+
+    <!-- Widget Labels -->
+    <string name="version">Version</string>
+    <string name="list">List</string>
+    <string name="map">Map</string>
+
 </resources>

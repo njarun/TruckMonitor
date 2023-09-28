@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/fragment_home"
+        android:title="@string/list"
+        android:icon="@drawable/icon_list"
+        app:tooltipText="@string/list" />
+
+    <item
+        android:id="@+id/fragment_profile"
+        android:title="@string/map"
+        android:icon="@drawable/icon_map"
+        app:tooltipText="@string/map" />
+
+</menu>
