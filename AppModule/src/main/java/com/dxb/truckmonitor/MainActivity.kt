@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
                             println("Trucks status - $it")
                         } else {
 
-                            println("Trucks - ${it as ArrayList<TruckModel>}")
+                            println("Trucks - ${(it as ArrayList<TruckModel>)}")
                         }
                     }
             } catch (error: Exception) {

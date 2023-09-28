@@ -20,10 +20,10 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - name: checkout
+      - name: Repo Checkout
         uses: actions/checkout@v3
-      
-      - name: Setting up JDK
+
+      - name: Setting Up JDK
         uses: actions/setup-java@v3
         with:
           distribution: "zulu"
@@ -39,13 +39,13 @@ jobs:
 
        # run: ./gradlew testDebugUnitTest
         
-      - name: generate report
+      - name: Generate Report
         uses: actions/upload-artifact@v3
         with:
-          name: report 
+          name: report
           path: AppModule/build/reports/coverage/androidTest/debug
-         # path: app/build/test-results
-            
+            # path: app/build/test-results
+
       
       - name: Download Test Reports Folder
         uses: actions/download-artifact@v3

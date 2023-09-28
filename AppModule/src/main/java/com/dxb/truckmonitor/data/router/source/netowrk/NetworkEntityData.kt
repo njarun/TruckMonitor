@@ -11,12 +11,4 @@ class NetworkEntityData @Inject constructor(private val truckMonitorApi: TruckMo
     override suspend fun getData(): ArrayList<TruckModel> {
         return truckMonitorApi.getTruckList()
     }
-
-    override suspend fun saveData(truckModelList: List<TruckModel>) {
-        //Do nothing -- nj
-    }
-
-    override suspend fun purgeAllData() {
-        //Do nothing -- nj
-    }
 }

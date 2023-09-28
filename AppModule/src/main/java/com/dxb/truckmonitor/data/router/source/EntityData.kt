@@ -6,7 +6,11 @@ interface EntityData {
 
     suspend fun getData(): ArrayList<TruckModel>
 
-    suspend fun saveData(truckModelList: List<TruckModel>)
+    suspend fun saveData(truckModelList: List<TruckModel>) {
 
-    suspend fun purgeAllData()
+    }
+
+    suspend fun purgeAllData() {
+
+    }
 }
