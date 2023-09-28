@@ -104,14 +104,16 @@ android {
         debug {
 
             testCoverageEnabled true
+            buildConfigField("String", "BASE_URL", "\"https://interviewtestapi.azurewebsites.net/api/\"")
         }
 
         release {
 
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-
             signingConfig signingConfigs.release
+
+            buildConfigField("String", "BASE_URL", "\"https://interviewtestapi.azurewebsites.net/api/\"")
         }
     }
 
