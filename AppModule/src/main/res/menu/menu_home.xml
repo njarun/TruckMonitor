@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/fragment_home"
+        android:id="@+id/fragment_list"
         android:title="@string/list"
         android:icon="@drawable/icon_list"
         app:tooltipText="@string/list" />
 
     <item
-        android:id="@+id/fragment_profile"
+        android:id="@+id/fragment_map"
         android:title="@string/map"
         android:icon="@drawable/icon_map"
         app:tooltipText="@string/map" />

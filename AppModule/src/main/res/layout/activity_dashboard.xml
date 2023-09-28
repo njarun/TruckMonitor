@@ -25,7 +25,7 @@
 
         <include layout="@layout/action_bar_main"
             android:id="@+id/action_bar"
-            app:pageTitle="@{@string/app_name}"
+            app:pageTitle="@{@string/dashboard_title}"
             app:baseViewModel="@{viewModel}"/>
 
         <androidx.fragment.app.FragmentContainerView
@@ -34,7 +34,8 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            app:defaultNavHost="true"/>
+            app:defaultNavHost="true"
+            app:navGraph="@navigation/navigation_app"/>
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_navigation"
