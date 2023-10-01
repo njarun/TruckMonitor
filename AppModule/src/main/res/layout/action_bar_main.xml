@@ -11,15 +11,19 @@
             type="String" />
 
         <variable
+            name="queryTextListener"
+            type="androidx.appcompat.widget.SearchView.OnQueryTextListener" />
+
+        <variable
             name="baseViewModel"
-            type="com.dxp.micircle.presentation.base.BaseViewModel" />
+            type="com.dxb.truckmonitor.presentation.base.BaseViewModel" />
 
     </data>
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/action_bar"
         android:layout_width="match_parent"
-        android:layout_height="?android:attr/actionBarSize"
+        android:layout_height="wrap_content"
         android:fitsSystemWindows="true"
         android:paddingEnd="0dp"
         android:paddingStart="0dp"
@@ -67,6 +71,16 @@
                 android:contentDescription="@string/sort_icon" />
 
         </androidx.appcompat.widget.Toolbar>
+
+        <androidx.appcompat.widget.SearchView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="24dp"
+            android:layout_marginBottom="20dp"
+            app:queryHint="Search"
+            app:iconifiedByDefault="false"
+            app:onQueryTextListener="@{queryTextListener}"
+            android:background="@drawable/translucent_curved_background"/>
 
     </com.google.android.material.appbar.AppBarLayout>
 

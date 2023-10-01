@@ -4,9 +4,9 @@ import androidx.databinding.ObservableInt
 import androidx.lifecycle.MutableLiveData
 import com.dxb.truckmonitor.Config
 import com.dxb.truckmonitor.domain.router.dto.model.TruckModel
+import com.dxb.truckmonitor.presentation.base.BaseViewModel
 import com.dxb.truckmonitor.presentation.base.adapters.BaseItemListener
 import com.dxb.truckmonitor.presentation.base.adapters.BaseListItem
-import com.dxp.micircle.presentation.base.BaseViewModel
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.BitmapDescriptorFactory

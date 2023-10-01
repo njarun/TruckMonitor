@@ -26,7 +26,8 @@
         <include layout="@layout/action_bar_main"
             android:id="@+id/action_bar"
             app:pageTitle="@{@string/dashboard_title}"
-            app:baseViewModel="@{viewModel}"/>
+            app:baseViewModel="@{viewModel}"
+            app:queryTextListener="@{viewModel.onQueryTextListener}"/>
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/host_main"

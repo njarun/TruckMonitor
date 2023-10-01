@@ -11,7 +11,6 @@ import com.dxb.truckmonitor.presentation.base.OnSuccess
 import com.dxb.truckmonitor.presentation.base.OpenNextScreen
 import com.dxb.truckmonitor.presentation.dashboard.DashboardActivity
 import com.dxb.truckmonitor.utils.Utility
-import com.dxp.micircle.presentation.base.*
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint @SuppressLint("CustomSplashScreen") //Customizations are limited - let it evolve! -- nj

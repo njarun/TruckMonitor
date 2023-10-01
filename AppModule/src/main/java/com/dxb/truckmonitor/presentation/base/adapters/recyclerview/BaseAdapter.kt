@@ -20,7 +20,7 @@ abstract class BaseAdapter<BINDING : ViewDataBinding, T : BaseListItem, itemList
     override fun getItemCount(): Int = data.size
 
     fun onPageSelected(pos: Int) {
-        if(listener is BaseItemListener)
+        if(listener is BaseItemListener && itemCount > 0 && pos < itemCount)
             listener.onPageSelected(pos, this.data[pos])
     }
 

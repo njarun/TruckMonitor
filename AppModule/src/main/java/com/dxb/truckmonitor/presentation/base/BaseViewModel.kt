@@ -1,13 +1,9 @@
-package com.dxp.micircle.presentation.base
+package com.dxb.truckmonitor.presentation.base
 
 import androidx.annotation.StringRes
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.dxb.truckmonitor.presentation.base.Interactor
-import com.dxb.truckmonitor.presentation.base.OnBackPressed
-import com.dxb.truckmonitor.presentation.base.OnRightAction
-import com.dxb.truckmonitor.presentation.base.ShowToast
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable

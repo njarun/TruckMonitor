@@ -2,8 +2,8 @@ package com.dxb.truckmonitor.presentation.dashboard.pages.list
 
 import androidx.lifecycle.MutableLiveData
 import com.dxb.truckmonitor.domain.router.dto.model.TruckModel
+import com.dxb.truckmonitor.presentation.base.BaseViewModel
 import com.dxb.truckmonitor.presentation.base.adapters.BaseItemListener
-import com.dxp.micircle.presentation.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
