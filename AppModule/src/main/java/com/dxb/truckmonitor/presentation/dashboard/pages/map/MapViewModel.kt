@@ -1,5 +1,6 @@
 package com.dxb.truckmonitor.presentation.dashboard.pages.map
 
+import androidx.databinding.ObservableInt
 import androidx.lifecycle.MutableLiveData
 import com.dxb.truckmonitor.Config
 import com.dxb.truckmonitor.domain.router.dto.model.TruckModel
@@ -20,41 +21,62 @@ import javax.inject.Inject
 class MapViewModel @Inject constructor(): BaseViewModel(), BaseItemListener {
 
     val displayTruckList = MutableLiveData<ArrayList<TruckModel>>()
-    private lateinit var googleMap: GoogleMap
-    private var currentMarker: Marker? = null
+    val scrollToPos = ObservableInt(0)
 
-    fun updateTruckList(truckList: ArrayList<TruckModel>) {
-        displayTruckList.value = truckList
-        if(truckList.isNotEmpty())
-            updateTruckLocation(truckList[0])
-    }
+    private var googleMap: GoogleMap? = null
+    private var currentMarker: Marker? = null
+    private var currentIndex = 0
 
     fun initMap(map: GoogleMap) {
 
-        if(!::googleMap.isInitialized) {
+        googleMap = map
 
-            googleMap = map
+        val cameraPosition = CameraPosition.Builder()
+            .target(LatLng(Config.MAP_DUBAI_LAT, Config.MAP_DUBAI_LON))
+            .zoom(Config.MAP_CAMERA_ZOOM).tilt(Config.MAP_CAMERA_TILT)
+            .build()
 
-            val cameraPosition = CameraPosition.Builder()
-                .target(LatLng(Config.MAP_DUBAI_LAT, Config.MAP_DUBAI_LON))
-                .zoom(Config.MAP_CAMERA_ZOOM).tilt(Config.MAP_CAMERA_TILT)
-                .build()
+        googleMap?.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
 
-            googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
+        scrollToPos.set(currentIndex)
+        updateTruckLocation()
+    }
+
+    fun updateTruckList(truckList: ArrayList<TruckModel>) {
+
+        displayTruckList.value = truckList
+
+        scrollToPos.set(currentIndex)
+        updateTruckLocation()
+    }
+
+    private fun updateTruckLocation() {
+
+        googleMap?.let {
+
+            if(displayTruckList.value == null || displayTruckList.value?.isEmpty() == true) {
+                return@let
+            }
+            else if(currentIndex >= (displayTruckList.value?.size ?: -1)) {
+                currentIndex = 0
+            }
+
+            val truckModel = displayTruckList.value!![currentIndex]
+            val latLng = LatLng(truckModel.lat, truckModel.lng)
+
+            currentMarker?.remove()
+
+            val markerOptions = MarkerOptions()
+                .position(latLng)
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
+            currentMarker = it.addMarker(markerOptions)
+
+            it.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, Config.MAP_CAMERA_ZOOM))
         }
     }
 
     override fun onPageSelected(index: Int, item: BaseListItem) {
-        updateTruckLocation(item as TruckModel)
-    }
-
-    private fun updateTruckLocation(truckModel: TruckModel) {
-        currentMarker?.remove()
-        val latLng = LatLng(truckModel.lat, truckModel.lng)
-        val markerOptions = MarkerOptions()
-            .position(latLng)
-            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
-        currentMarker = googleMap.addMarker(markerOptions)
-        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, Config.MAP_CAMERA_ZOOM))
+        currentIndex = index
+        updateTruckLocation()
     }
 }

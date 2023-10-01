@@ -49,6 +49,7 @@
             app:dataSet="@{viewModel.displayTruckList}"
             app:pagerMargin="@{@integer/pager_margin}"
             app:pagerPadding="@{@integer/pager_padding}"
+            app:scrollToPos="@{viewModel.scrollToPos}"
             android:layout_marginBottom="@dimen/pager_margin_bottom"
             tools:listitem="@layout/item_truck_driver"/>
 

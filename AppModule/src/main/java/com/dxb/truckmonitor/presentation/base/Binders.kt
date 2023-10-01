@@ -98,8 +98,8 @@ fun RecyclerView.setRecyclerAdapter(recyclerviewAdapter: BaseAdapter<*, *, *>?, 
     }
 }
 
-@BindingAdapter(value = ["adapter", "dataSet"], requireAll = false) @Suppress("UNCHECKED_CAST")
-fun ViewPager.setPagerAdapter(viewPagerAdapter: BasePagerAdapter<*, *, *>?, pagerDataset: List<BaseListItem>?) {
+@BindingAdapter(value = ["adapter", "dataSet", "scrollToPos"], requireAll = false) @Suppress("UNCHECKED_CAST")
+fun ViewPager.setPagerAdapter(viewPagerAdapter: BasePagerAdapter<*, *, *>?, pagerDataset: List<BaseListItem>?, scrollToPos: Int) {
 
     var listAdapter = viewPagerAdapter as BasePagerAdapter<ViewDataBinding, BaseListItem, Any>?
     listAdapter?.let {
@@ -130,6 +130,9 @@ fun ViewPager.setPagerAdapter(viewPagerAdapter: BasePagerAdapter<*, *, *>?, page
         }
 
         listAdapter!!.updateData(pagerDataset ?: listOf())
+
+        if (scrollToPos >= 0 && scrollToPos < (adapter?.count ?: 0))
+            post { setCurrentItem(scrollToPos, false) }
     }
 }
 
