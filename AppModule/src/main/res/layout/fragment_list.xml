@@ -9,10 +9,6 @@
         <import type="android.view.View" />
 
         <variable
-            name="selfId"
-            type="String" />
-
-        <variable
             name="viewModel"
             type="com.dxb.truckmonitor.presentation.dashboard.pages.list.ListViewModel" />
 
@@ -37,7 +33,7 @@
             app:adapter="@{adapter}"
             app:dataSet="@{viewModel.displayTruckList}"
             app:scrollToLast="@{false}"
-            tools:listitem="@layout/item_truck_list"/>
+            tools:listitem="@layout/item_truck_driver"/>
 
     </LinearLayout>
 

@@ -4,6 +4,13 @@
     <dimen name="heading_main">20sp</dimen>
     <dimen name="heading_normal">18sp</dimen>
     <dimen name="text_size">15sp</dimen>
+    <dimen name="cell_text_margin">3dp</dimen>
+
+    <integer name="pager_margin">15</integer>
+    <integer name="pager_padding">30</integer>
+    <dimen name="pager_margin_bottom">40dp</dimen>
+
+
     <dimen name="design_bottom_navigation_item_max_width" tools:override="true">600dp</dimen>
     <dimen name="design_bottom_navigation_active_item_max_width" tools:override="true">600dp</dimen>
 

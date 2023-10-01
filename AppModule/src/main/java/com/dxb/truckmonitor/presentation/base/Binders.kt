@@ -9,12 +9,14 @@ import androidx.databinding.BindingAdapter
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager.widget.ViewPager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.dxb.truckmonitor.presentation.base.adapters.BaseListItem
+import com.dxb.truckmonitor.presentation.base.adapters.pager.BasePagerAdapter
 import com.dxb.truckmonitor.presentation.base.adapters.recyclerview.BaseAdapter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
@@ -35,28 +37,31 @@ fun View.showToast(message: String?) {
 }
 
 @BindingAdapter(value = ["adapter", "dataSet", "scrollToLast", "associatedFab"], requireAll = false) @Suppress("UNCHECKED_CAST")
-fun setRecyclerAdapter(recyclerView: RecyclerView, recyclerviewAdapter: BaseAdapter<*, *, *>?, recyclerviewDataset: List<BaseListItem>?, scrollToLast: Boolean, fab: FloatingActionButton?) {
+fun RecyclerView.setRecyclerAdapter(recyclerviewAdapter: BaseAdapter<*, *, *>?, recyclerviewDataset: List<BaseListItem>?, scrollToLast: Boolean, fab: FloatingActionButton?) {
 
-    var adapter = recyclerviewAdapter as BaseAdapter<ViewDataBinding, BaseListItem, Any>?
-    val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+    var listAdapter = recyclerviewAdapter as BaseAdapter<ViewDataBinding, BaseListItem, Any>?
+    val layoutManager = layoutManager as LinearLayoutManager
     var scrollToItemPos = layoutManager.findFirstCompletelyVisibleItemPosition()
 
-    adapter?.let {
+    listAdapter?.let {
 
-        if(recyclerView.adapter == null) {
+        if(adapter == null) {
 
-            recyclerView.adapter = adapter
+            adapter = listAdapter
 
-            recyclerView.clearOnScrollListeners()
-            recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            clearOnScrollListeners()
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
 
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
 
+                    val firstVisiblePosition = layoutManager.findFirstCompletelyVisibleItemPosition()
+                    it.onPageSelected(firstVisiblePosition)
+
                     val lastVisiblePosition = layoutManager.findLastCompletelyVisibleItemPosition()
-                    val itemCount = recyclerView.adapter?.itemCount ?: 0
+                    val itemCount = adapter?.itemCount ?: 0
 
                     if (lastVisiblePosition == itemCount - 1) {
-                        it.onScrolledToEnd(itemCount - 1)
+                        it.onListScrolledToEnd(itemCount - 1)
                     }
 
                     fab?.let {
@@ -79,20 +84,62 @@ fun setRecyclerAdapter(recyclerView: RecyclerView, recyclerviewAdapter: BaseAdap
         }
         else {
 
-            adapter = recyclerView.adapter as BaseAdapter<ViewDataBinding, BaseListItem, Any>
+            listAdapter = adapter as BaseAdapter<ViewDataBinding, BaseListItem, Any>
         }
 
-        adapter!!.updateData(recyclerviewDataset ?: listOf())
+        listAdapter!!.updateData(recyclerviewDataset ?: listOf())
 
         if(scrollToLast && scrollToItemPos >= 0) {
-            scrollToItemPos = (adapter!!.itemCount - 1)
+            scrollToItemPos = (listAdapter!!.itemCount - 1)
         }
 
         if(scrollToItemPos >= 0)
-            recyclerView.post{ layoutManager.scrollToPosition(scrollToItemPos) }
+            post{ layoutManager.scrollToPosition(scrollToItemPos) }
     }
 }
 
+@BindingAdapter(value = ["adapter", "dataSet"], requireAll = false) @Suppress("UNCHECKED_CAST")
+fun ViewPager.setPagerAdapter(viewPagerAdapter: BasePagerAdapter<*, *, *>?, pagerDataset: List<BaseListItem>?) {
+
+    var listAdapter = viewPagerAdapter as BasePagerAdapter<ViewDataBinding, BaseListItem, Any>?
+    listAdapter?.let {
+
+        if (adapter == null) {
+
+            adapter = listAdapter
+
+            clearOnPageChangeListeners()
+            addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+
+                override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+                    it.onListScrolledToEnd(position)
+                }
+
+                override fun onPageSelected(position: Int) {
+                    it.onPageSelected(position)
+                }
+
+                override fun onPageScrollStateChanged(state: Int) {
+
+                }
+            })
+        }
+        else {
+
+            listAdapter = adapter as BasePagerAdapter<ViewDataBinding, BaseListItem, Any>
+        }
+
+        listAdapter!!.updateData(pagerDataset ?: listOf())
+    }
+}
+
+@BindingAdapter(value = ["pagerMargin", "pagerPadding"], requireAll = false)
+fun ViewPager.setPagerMargin(pagerMargin: Int, pagerPadding: Int) {
+    clipToPadding = false
+    pageMargin = (pagerMargin * context.resources.displayMetrics.density).toInt()
+    val pad = (pagerPadding * context.resources.displayMetrics.density).toInt()
+    setPadding(pad,0,pad,0)
+}
 
 @BindingAdapter(value = ["imageUrl", "dontScale", "placeholder", "progressView", "errorIcon"], requireAll = false)
 fun ImageView.loadImageFromUrlOrPlaceholder(url: String?, dontScale: Boolean?, placeholder: Int?, progressBar: ProgressBar?, errorIcon: ImageView?) {

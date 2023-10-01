@@ -6,8 +6,8 @@ import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
+import com.dxb.truckmonitor.presentation.base.adapters.BaseItemListener
 import com.dxb.truckmonitor.presentation.base.adapters.BaseListItem
-import com.dxb.truckmonitor.presentation.base.adapters.ItemListener
 
 abstract class BaseAdapter<BINDING : ViewDataBinding, T : BaseListItem, itemListener: Any>(var data: List<T>,
                                            val listener: Any): RecyclerView.Adapter<BaseViewHolder<BINDING>>() {
@@ -19,9 +19,14 @@ abstract class BaseAdapter<BINDING : ViewDataBinding, T : BaseListItem, itemList
 
     override fun getItemCount(): Int = data.size
 
-    open fun onScrolledToEnd(pos: Int) {
-        if(listener is ItemListener)
-            listener.onScrolledToEnd(pos)
+    fun onPageSelected(pos: Int) {
+        if(listener is BaseItemListener)
+            listener.onPageSelected(pos, this.data[pos])
+    }
+
+    fun onListScrolledToEnd(pos: Int) {
+        if(listener is BaseItemListener)
+            listener.onListScrolledToEnd(pos)
     }
 
     fun updateData(list: List<T>) {

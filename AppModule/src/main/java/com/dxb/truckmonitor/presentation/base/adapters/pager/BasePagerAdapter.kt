@@ -7,19 +7,28 @@ import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.viewpager.widget.PagerAdapter
+import com.dxb.truckmonitor.presentation.base.adapters.BaseItemListener
 import com.dxb.truckmonitor.presentation.base.adapters.BaseListItem
-import com.dxb.truckmonitor.presentation.base.adapters.ItemListener
 
-abstract class BasePagerAdapter<BINDING : ViewDataBinding, T : BaseListItem, itemListener: ItemListener>(var data:
-                                                                     List<T>, val listener: ItemListener): PagerAdapter() {
+abstract class BasePagerAdapter<BINDING : ViewDataBinding, T : BaseListItem, itemListener: Any>(var data:
+                                                                     List<T>, val listener: Any): PagerAdapter() {
 
     @get:LayoutRes
     abstract val layoutId: Int
 
-    abstract fun bind(binding: BINDING, item: T, itemPos: String)
+    abstract fun bind(binding: BINDING, item: T, itemPos: Int)
 
-    fun onScrolled(pos: Int) {
-        listener.onScrolledToEnd(pos)
+    fun onPageSelected(index: Int) {
+        if(listener is BaseItemListener) {
+            listener.onPageSelected(index, this.data[index])
+            listener.onListScrolledToEnd(index)
+        }
+    }
+
+    fun onListScrolledToEnd(index: Int) {
+        if(index == this.data.size - 1 && listener is BaseItemListener) {
+            listener.onListScrolledToEnd(index)
+        }
     }
 
     fun updateData(list: List<T>) {
@@ -33,7 +42,7 @@ abstract class BasePagerAdapter<BINDING : ViewDataBinding, T : BaseListItem, ite
 
         val binder = DataBindingUtil.inflate<BINDING>(LayoutInflater.from(collection.context), layoutId, null, false)
 
-        bind(binder, data[position], "${position+1} / $count")
+        bind(binder, data[position], position)
 
         collection.addView(binder.root)
 

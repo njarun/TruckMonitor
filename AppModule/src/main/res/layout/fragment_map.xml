@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:map="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.popular.broadcast.presentation.home.HomeFragment">
 
     <data>
 
-        <import type="android.view.View" />
+        <import type="com.dxb.truckmonitor.Config" />
 
         <variable
-            name="selfId"
-            type="String" />
+            name="adapter"
+            type="com.dxb.truckmonitor.presentation.dashboard.pages.map.TruckMapAdapter" />
 
         <variable
             name="viewModel"
@@ -17,18 +19,39 @@
 
     </data>
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center"
         android:animateLayoutChanges="true">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Map View"/>
+        <fragment
+            android:id="@+id/truck_map"
+            class="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            map:uiCompass="true"
+            map:mapType="normal"
+            map:uiRotateGestures="true"
+            map:uiScrollGestures="true"
+            map:uiTiltGestures="true"
+            map:uiZoomControls="false"
+            map:uiZoomGestures="true"
+            map:zOrderOnTop="false"
+            tools:ignore="FragmentTagUsage" />
 
-    </LinearLayout>
+        <com.dxb.truckmonitor.presentation.widgets.AppViewPager
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            app:adapter="@{adapter}"
+            app:dataSet="@{viewModel.displayTruckList}"
+            app:pagerMargin="@{@integer/pager_margin}"
+            app:pagerPadding="@{@integer/pager_padding}"
+            android:layout_marginBottom="@dimen/pager_margin_bottom"
+            tools:listitem="@layout/item_truck_driver"/>
+
+    </FrameLayout>
 
 </layout>
