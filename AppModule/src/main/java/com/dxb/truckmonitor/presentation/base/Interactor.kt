@@ -10,18 +10,13 @@ interface Interactor
 
 object CloseScreen: Interactor
 object OnBackPressed: Interactor
-object OnNewAccount : Interactor
-object OnLogout : Interactor
-object OnNewPost : Interactor
-object OpenMediaPicker : Interactor
-
+object OnRightAction: Interactor
 object OnSuccess : Interactor
 object OnFailed : Interactor
 class ShowToast(val message: Any): Interactor
 class OpenNextScreen(val clazz: Class<*>, val bundle: Bundle? = null): Interactor
 class FinishAndOpenNextScreen(val clazz: Class<*>, val finishAll: Boolean, val bundle: Bundle? = null):
     Interactor
-class OpenMediaViewer(val mediaPath: String?): Interactor
 class OnException(val t: Throwable): Interactor
 
 fun handleVMInteractions(activity: BaseActivity<*, *>, interaction: Interactor): Boolean {

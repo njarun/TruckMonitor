@@ -1,8 +1,9 @@
 package com.dxb.truckmonitor.presentation.dashboard
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.dxb.truckmonitor.data.session.SessionContext
+import com.dxb.truckmonitor.domain.helpers.TrucksObserver
 import com.dxb.truckmonitor.domain.router.dto.model.TruckModel
 import com.dxb.truckmonitor.domain.usecase.TrucksUseCase
 import com.dxb.truckmonitor.presentation.base.OnException
@@ -14,13 +15,12 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class DashboardViewModel @Inject constructor(private val trucksUseCase: TrucksUseCase) : BaseViewModel() {
+class DashboardViewModel @Inject constructor(private val trucksUseCase: TrucksUseCase,
+                     private val sessionContext: SessionContext, private val trucksObserver: TrucksObserver) : BaseViewModel() {
 
-    private val _truckList = MutableLiveData<ArrayList<TruckModel>>()
-    val truckList: LiveData<ArrayList<TruckModel>> = _truckList
+    private val truckList = MutableLiveData<ArrayList<TruckModel>>()
 
     init {
-
         pullTruckList()
     }
 
@@ -46,7 +46,8 @@ class DashboardViewModel @Inject constructor(private val trucksUseCase: TrucksUs
                     }
                     else {
                         _viewRefreshState.postValue(false)
-                        _truckList.value = it as ArrayList<TruckModel>
+                        truckList.value = it as ArrayList<TruckModel>
+                        publishTrucks()
                     }
                 }
             }
@@ -56,6 +57,17 @@ class DashboardViewModel @Inject constructor(private val trucksUseCase: TrucksUs
                 error.printStackTrace()
                 emitAction(OnException(error))
             }
+        }
+    }
+
+    fun sortTruckList() {
+        sessionContext.updateFeedSortOrder()
+        publishTrucks(true)
+    }
+
+    private fun publishTrucks(sort: Boolean = false) {
+        this.truckList.value?.let {
+            trucksObserver.publish(TrucksObserver.TruckData((if(sort) it.reversed() else it) as ArrayList<TruckModel>))
         }
     }
 }

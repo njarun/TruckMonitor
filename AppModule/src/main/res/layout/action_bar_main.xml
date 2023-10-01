@@ -61,7 +61,7 @@
                 android:padding="10dp"
                 android:scaleY="1.3"
                 app:tint="@color/md_white_1000"
-                android:onClick="@{() -> baseViewModel.postMessage(@string/out_of_scope_functionalities)}"
+                android:onClick="@{() -> baseViewModel.onRightAction()}"
                 android:layout_gravity="center_vertical|end"
                 android:src="@drawable/icon_sort"
                 android:contentDescription="@string/sort_icon" />

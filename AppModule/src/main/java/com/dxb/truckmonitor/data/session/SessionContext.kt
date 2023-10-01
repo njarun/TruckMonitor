@@ -9,4 +9,10 @@ class SessionContext @Inject constructor() {
     }
 
     var feedSortOrder = FEED_SORT_ORDER.ASC
+
+    fun updateFeedSortOrder() {
+        feedSortOrder = if(feedSortOrder == FEED_SORT_ORDER.ASC)
+            FEED_SORT_ORDER.DSC
+        else FEED_SORT_ORDER.ASC
+    }
 }

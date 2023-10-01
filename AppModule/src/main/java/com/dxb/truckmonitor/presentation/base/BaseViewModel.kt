@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.dxb.truckmonitor.presentation.base.Interactor
 import com.dxb.truckmonitor.presentation.base.OnBackPressed
+import com.dxb.truckmonitor.presentation.base.OnRightAction
 import com.dxb.truckmonitor.presentation.base.ShowToast
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
@@ -52,6 +53,10 @@ open class BaseViewModel : ViewModel() {
 
     fun onBackPressed() {
         emitAction(OnBackPressed)
+    }
+
+    fun onRightAction() {
+        emitAction(OnRightAction)
     }
 
     fun postMessage(message: String) {

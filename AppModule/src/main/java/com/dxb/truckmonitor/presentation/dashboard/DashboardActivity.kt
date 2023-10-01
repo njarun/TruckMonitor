@@ -4,6 +4,8 @@ import androidx.activity.viewModels
 import androidx.viewbinding.ViewBinding
 import com.dxb.truckmonitor.databinding.ActivityDashboardBinding
 import com.dxb.truckmonitor.presentation.base.BaseActivity
+import com.dxb.truckmonitor.presentation.base.Interactor
+import com.dxb.truckmonitor.presentation.base.OnRightAction
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -19,10 +21,18 @@ class DashboardActivity : BaseActivity<ActivityDashboardBinding, DashboardViewMo
             fragmentManager = supportFragmentManager
             viewModel = this@DashboardActivity.viewModel
         }
+    }
 
-        viewModel.truckList.observe(this) {
+    override fun handleVMInteractions(interaction: Interactor): Boolean {
 
-            println("Total trucks - ${it.count()}")
+        when(interaction) {
+
+            is OnRightAction -> {
+                viewModel.sortTruckList()
+                return true
+            }
         }
+
+        return super.handleVMInteractions(interaction)
     }
 }

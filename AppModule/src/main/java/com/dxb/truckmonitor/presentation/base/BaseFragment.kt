@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 import com.dxp.micircle.presentation.base.BaseViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 
 @Suppress("UNCHECKED_CAST")
@@ -18,6 +19,7 @@ abstract class BaseFragment<T, VM : BaseViewModel> : Fragment() {
     private lateinit var mActivity: BaseActivity<*, *>
 
     private lateinit var vmOperationsDisposible: Disposable
+    private val subscriptions = CompositeDisposable()
 
     private var viewBinding: ViewBinding? = null
     private var toast: Toast? = null
@@ -25,6 +27,7 @@ abstract class BaseFragment<T, VM : BaseViewModel> : Fragment() {
     protected abstract val viewModel: VM
     abstract fun constructViewBinding(): ViewBinding
     abstract fun onCreated(viewBinding: ViewBinding)
+    abstract fun initListeners()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,19 +45,27 @@ abstract class BaseFragment<T, VM : BaseViewModel> : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewBinding?.let { onCreated(it) }
+        viewBinding?.let {
+            onCreated(it)
+            initListeners()
+        }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         viewBinding = null
         vmOperationsDisposible.dispose()
+        subscriptions.dispose()
     }
 
     fun getViewBinding(): T = viewBinding as T
 
     open fun handleVMInteractions(interaction: Interactor): Boolean {
         return handleVMInteractions(mActivity, interaction)
+    }
+
+    fun addSubscriptions(disposable: Disposable) {
+        subscriptions.add(disposable)
     }
 
     protected fun showToast(@StringRes stringRes: Int) {

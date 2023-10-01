@@ -2,6 +2,7 @@ package com.dxb.truckmonitor.di.module
 
 import com.dxb.truckmonitor.data.router.CoroutineDispatcherProvider
 import com.dxb.truckmonitor.data.session.SessionContext
+import com.dxb.truckmonitor.domain.helpers.TrucksObserver
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,4 +19,8 @@ object SessionModule {
     @Singleton
     @Provides
     fun provideSessionContext(): SessionContext = SessionContext()
+
+    @Singleton
+    @Provides
+    fun provideTrucksObserver(): TrucksObserver = TrucksObserver()
 }
