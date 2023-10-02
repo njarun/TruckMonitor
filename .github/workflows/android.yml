@@ -30,15 +30,15 @@ jobs:
           java-version: 11
 
        # Execute build and invoke tests
-      - name: Build debug
-        run: bash ./gradlew build jacocoTestReport assembleAndroidTest test
+      #- name: Build debug
+      #  run: bash ./gradlew build assembleAndroidTest test connectedAndroidTest jacocoTestReport
 
        # Execute unit tests
       - name: Unit Test with Android Emulator Runner
         uses: reactivecircus/android-emulator-runner@v2
         with: 
             api-level: 29
-            script: ./gradlew connectedCheck
+            script: ./gradlew build connectedCheck assembleAndroidTest test connectedAndroidTest jacocoTestReport
             #./gradlew createDebugCoverageReport:  
 
        # run: ./gradlew testDebugUnitTest
