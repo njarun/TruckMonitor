@@ -21,7 +21,7 @@ class DashboardViewModel @Inject constructor(private val trucksUseCase: TrucksUs
 
     private val _truckList = MutableLiveData<ArrayList<TruckModel>>()
     val truckList: LiveData<ArrayList<TruckModel>> = _truckList
-    private var backupTruckList = ArrayList<TruckModel>()
+    private var truckData = ArrayList<TruckModel>()
     private var searchQuery = ""
 
     init {
@@ -48,10 +48,15 @@ class DashboardViewModel @Inject constructor(private val trucksUseCase: TrucksUs
                     if (it is Boolean) {
                         _viewRefreshState.postValue(it)
                     }
+                    else if(it is Exception) {
+                        _viewRefreshState.postValue(false)
+                        it.printStackTrace()
+                        emitAction(OnException(it))
+                    }
                     else {
                         _viewRefreshState.postValue(false)
                         _truckList.value = it as ArrayList<TruckModel>
-                        backupTruckList = _truckList.value as ArrayList<TruckModel>
+                        truckData = _truckList.value as ArrayList<TruckModel>
                     }
                 }
             }
@@ -64,11 +69,15 @@ class DashboardViewModel @Inject constructor(private val trucksUseCase: TrucksUs
         }
     }
 
+    fun onRefresh() {
+        pullTruckList()
+    }
+
     fun sortTruckList() {
         sessionContext.updateFeedSortOrder()
         truckList.value?.let {
-            _truckList.value = backupTruckList.reversed() as ArrayList<TruckModel>
-            backupTruckList = _truckList.value as ArrayList<TruckModel>
+            _truckList.value = truckData.reversed() as ArrayList<TruckModel>
+            truckData = _truckList.value as ArrayList<TruckModel>
             if(searchQuery.isNotEmpty())
                 filterTrucks()
         }
@@ -89,8 +98,8 @@ class DashboardViewModel @Inject constructor(private val trucksUseCase: TrucksUs
 
     private fun filterTrucks() {
         _truckList.value = if(searchQuery.trim().isEmpty())
-            backupTruckList
-        else backupTruckList.filter {
+            truckData
+        else truckData.filter {
 
             it.plateNo.contains(searchQuery, true)
                     || it.driverName?.contains(searchQuery, true) == true

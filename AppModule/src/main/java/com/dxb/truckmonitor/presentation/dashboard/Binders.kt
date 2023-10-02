@@ -28,7 +28,7 @@ fun TextView.spanText(spanText: String, normalText: String?) {
 
     val spannable = SpannableString(textString)
     spannable.setSpan(
-        ForegroundColorSpan(ContextCompat.getColor(context, R.color.purple_700)),
+        ForegroundColorSpan(ContextCompat.getColor(context, R.color.theme_color)),
         0, spanEnd,
         Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
     )

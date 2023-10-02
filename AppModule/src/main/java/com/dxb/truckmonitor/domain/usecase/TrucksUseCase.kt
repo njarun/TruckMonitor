@@ -9,29 +9,33 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class TrucksUseCase @Inject constructor(
-    private val trucksRepository: TrucksRepository,
-    private val coroutineDispatcherProvider: CoroutineDispatcherProvider
-) {
+class TrucksUseCase @Inject constructor(private val trucksRepository: TrucksRepository,
+    private val coroutineDispatcherProvider: CoroutineDispatcherProvider) {
 
     fun fetchTruckList() = flow {
 
-        val trucksLocalList = getDataFromLocal()
+        try {
 
-        if (trucksLocalList.isNotEmpty()) {
-            emit(trucksLocalList)
+            val trucksLocalList = getDataFromLocal()
+
+            if (trucksLocalList.isNotEmpty()) {
+                emit(trucksLocalList)
+            }
+
+            emit(true) //to show the fetch progress
+
+            val trucksNetworkList = getDataFromNetwork()
+
+            if (trucksNetworkList.isNotEmpty()) { //Else it will be network or data error, which will be caught in the VM
+                deleteAndSaveAllData(trucksNetworkList)
+                emit(trucksNetworkList)
+            }
         }
-
-        emit(true) //to show the fetch progress
-
-        val trucksNetworkList = getDataFromNetwork()
-
-        if (trucksNetworkList.isNotEmpty()) { //Else it will be network or data error, which will be caught in the VM
-            deleteAndSaveAllData(trucksNetworkList)
-            emit(trucksNetworkList)
+        catch (exception: Exception) {
+            emit(exception)
         }
     }
-        .flowOn(coroutineDispatcherProvider.IO())
+    .flowOn(coroutineDispatcherProvider.IO())
 
     private suspend fun getDataFromLocal(): ArrayList<TruckModel> {
         return trucksRepository.getDataFromLocal()

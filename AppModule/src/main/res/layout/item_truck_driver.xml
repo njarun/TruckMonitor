@@ -51,13 +51,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
-                <androidx.appcompat.widget.AppCompatImageView
+                <com.google.android.material.imageview.ShapeableImageView
                     style="@style/ShapeCircle"
                     android:id="@+id/preview_image_tv"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     android:src="@drawable/placeholder_truck_image"
                     android:scaleType="centerCrop"
+                    app:shapeAppearanceOverlay="@style/RoundedSquare"
                     android:contentDescription="@string/truck_item_image" />
 
             </FrameLayout>

@@ -4,8 +4,8 @@
     <style name="Theme.TruckMonitor" parent="Theme.MaterialComponents.Light.NoActionBar">
 
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_700</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorPrimary">@color/theme_color</item>
+        <item name="colorPrimaryVariant">@color/theme_color</item>
         <item name="colorOnPrimary">@color/white</item>
 
         <!-- Secondary brand color. -->
@@ -20,7 +20,9 @@
 
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" >
+        <item name="android:textColorHint">@color/md_grey_300</item>
+    </style>
 
     <style name="AppTheme.PopupTheme" parent="ThemeOverlay.AppCompat.Light">
         <item name="android:textColor">@color/black</item>
