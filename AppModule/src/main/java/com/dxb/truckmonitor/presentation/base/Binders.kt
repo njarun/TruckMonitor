@@ -1,40 +1,17 @@
 package com.dxb.truckmonitor.presentation.base
 
-import android.graphics.drawable.Drawable
-import android.view.View
 import android.widget.ImageView
-import android.widget.ProgressBar
-import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.DataSource
-import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.target.Target
 import com.dxb.truckmonitor.presentation.base.adapters.BaseListItem
 import com.dxb.truckmonitor.presentation.base.adapters.pager.BasePagerAdapter
 import com.dxb.truckmonitor.presentation.base.adapters.recyclerview.BaseAdapter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-
-@BindingAdapter("android:visibility")
-fun View.visibility(state: Boolean) {
-    visibility = if(state) View.VISIBLE else View.GONE
-}
-
-@BindingAdapter("showToast")
-fun View.showToast(message: String?) {
-
-    message?.let {
-
-        setOnClickListener {
-            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-        }
-    }
-}
 
 @BindingAdapter(value = ["adapter", "dataSet", "scrollToLast", "associatedFab"], requireAll = false) @Suppress("UNCHECKED_CAST")
 fun RecyclerView.setRecyclerAdapter(recyclerviewAdapter: BaseAdapter<*, *, *>?, recyclerviewDataset: List<BaseListItem>?, scrollToLast: Boolean, fab: FloatingActionButton?) {
@@ -144,62 +121,14 @@ fun ViewPager.setPagerMargin(pagerMargin: Int, pagerPadding: Int) {
     setPadding(pad,0,pad,0)
 }
 
-@BindingAdapter(value = ["imageUrl", "dontScale", "placeholder", "progressView", "errorIcon"], requireAll = false)
-fun ImageView.loadImageFromUrlOrPlaceholder(url: String?, dontScale: Boolean?, placeholder: Int?, progressBar: ProgressBar?, errorIcon: ImageView?) {
-
-    if (!url.isNullOrEmpty()) {
-
-        val requestListener: RequestListener<Drawable> = object : RequestListener<Drawable> {
-
-            override fun onLoadFailed(e: GlideException?, model: Any, target: Target<Drawable>, isFirstResource: Boolean): Boolean {
-
-                errorIcon?.let {
-
-                    if(it.visibility == View.GONE)
-                        it.visibility = View.VISIBLE
-                }
-
-                progressBar?.let {
-
-                    if(it.visibility == View.VISIBLE)
-                        it.visibility = View.GONE
-                }
-
-                return false
-            }
-
-            override fun onResourceReady(resource: Drawable?, model: Any, target: Target<Drawable>, dataSource: DataSource, isFirstResource: Boolean): Boolean {
-
-                errorIcon?.let {
-
-                    if(it.visibility == View.VISIBLE)
-                        it.visibility = View.GONE
-                }
-
-                progressBar?.let {
-
-                    if(it.visibility == View.VISIBLE)
-                        it.visibility = View.GONE
-                }
-
-                return false
-            }
-        }
-
-        if (dontScale != null && dontScale) {
-
-            Glide.with(context).load(url).listener(requestListener).into(this)
-        }
-        else {
-
-            Glide.with(context).load(url).listener(requestListener).centerCrop().into(this)
-        }
-    }
-    else {
-
-        placeholder?.let {
-            Glide.with(context)
-                .load(placeholder).into(this)
-        }
+@BindingAdapter(value = ["imageUrl", "placeholder"], requireAll = false)
+fun ImageView.loadImageFromUrlOrPlaceholder(url: String?, placeholder: Int?) {
+    if(url.isNullOrEmpty())
+        placeholder?.let { Glide.with(context)
+                .load(it).into(this) }
+    else { if(placeholder == null)
+            Glide.with(context).load(url).centerCrop().into(this)
+        else
+            Glide.with(context).load(url).placeholder(ContextCompat.getDrawable(context, placeholder)).centerCrop().into(this)
     }
 }

@@ -56,8 +56,9 @@
                     android:id="@+id/preview_image_tv"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
-                    android:src="@drawable/placeholder_truck_image"
                     android:scaleType="centerCrop"
+                    app:imageUrl="@{truckModel.imageURL}"
+                    app:placeholder="@{com.dxb.truckmonitor.R.drawable.placeholder_truck_image}"
                     app:shapeAppearanceOverlay="@style/RoundedSquare"
                     android:contentDescription="@string/truck_item_image" />
 
