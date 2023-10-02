@@ -30,7 +30,7 @@
             app:pageTitle="@{@string/dashboard_title}"
             app:queryTextListener="@{viewModel.onQueryTextListener}" />
 
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        <com.dxb.truckmonitor.presentation.widgets.AppSwipeToRefresh
             android:id="@+id/swipe_refresh_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -70,7 +70,7 @@
 
             </LinearLayout>
 
-        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+        </com.dxb.truckmonitor.presentation.widgets.AppSwipeToRefresh>
 
     </LinearLayout>
 

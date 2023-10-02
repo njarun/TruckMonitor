@@ -20,7 +20,7 @@ class ListViewModel @Inject constructor(): BaseViewModel(), BaseItemListener {
 
     override fun onItemClicked(index: Int, item: BaseListItem) {
         displayTruckList.value?.get(index)?.driverName?.let {
-            postMessage(Html.fromHtml("Selected: <big><b>$it</b></big>"))
+            postMessage(Html.fromHtml("Selected: <big><b>$it</b></big>")) //Temp code no need of string reference
         }
     }
 }
