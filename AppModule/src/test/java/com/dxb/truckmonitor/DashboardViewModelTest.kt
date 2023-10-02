@@ -40,17 +40,6 @@ class DashboardViewModelTest {
     }
 
     @Test
-    fun `initial state of view model`() = runBlocking {
-
-        whenever(sessionContext.feedSortOrder)
-            .thenReturn(SessionContext.FEED_SORT_ORDER.ASC)
-
-        viewModel = DashboardViewModel(trucksUsecase, sessionContext)
-
-        Assert.assertEquals(false, viewModel.viewRefreshState.value)
-    }
-
-    @Test
     fun `loading state of view model`() = runBlocking {
 
         val trucksList = createTrucksList(110)

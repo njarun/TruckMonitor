@@ -31,7 +31,7 @@ jobs:
 
        # Execute build and invoke tests
       - name: Build debug
-        run: bash ./gradlew build jacocoTestReport assembleAndroidTest test
+        run: bash ./gradlew build assembleAndroidTest test connectedAndroidTest jacocoTestReport
 
        # Execute unit tests
       - name: Unit Test with Android Emulator Runner
@@ -47,7 +47,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: report
-          path: AppModule/build/reports/coverage/androidTest/debug
+          path: AppModule/build/reports
             # path: app/build/test-results
 
       
@@ -55,7 +55,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: report
-          path: AppModule/build/reports/coverage/androidTest/debug
+          path: AppModule/build/reports
         
       - name: Upload Test Report
         env:
