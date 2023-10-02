@@ -34,6 +34,7 @@ allprojects {
             force "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinCoroutinesVersion"
             force "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlinCoroutinesVersion"
             force "org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlinCoroutinesVersion"
+            force "org.hamcrest:hamcrest-core:2.2"
         }
     }
 }
@@ -50,7 +51,7 @@ ext {
     APP_VERSION_NAME = '1.0.0'
 
     PROJECT_SDK_VERSION = 32
-    MIN_SDK_VERSION = 21
+    MIN_SDK_VERSION = 24
 
     JAVA_VERSION = JavaVersion.VERSION_11
 

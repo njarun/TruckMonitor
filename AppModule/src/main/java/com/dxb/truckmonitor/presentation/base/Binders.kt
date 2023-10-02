@@ -11,10 +11,9 @@ import com.bumptech.glide.Glide
 import com.dxb.truckmonitor.presentation.base.adapters.BaseListItem
 import com.dxb.truckmonitor.presentation.base.adapters.pager.BasePagerAdapter
 import com.dxb.truckmonitor.presentation.base.adapters.recyclerview.BaseAdapter
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-@BindingAdapter(value = ["adapter", "dataSet", "scrollToLast", "associatedFab"], requireAll = false) @Suppress("UNCHECKED_CAST")
-fun RecyclerView.setRecyclerAdapter(recyclerviewAdapter: BaseAdapter<*, *, *>?, recyclerviewDataset: List<BaseListItem>?, scrollToLast: Boolean, fab: FloatingActionButton?) {
+@BindingAdapter(value = ["adapter", "dataSet", "scrollToLast"], requireAll = false) @Suppress("UNCHECKED_CAST")
+fun RecyclerView.setRecyclerAdapter(recyclerviewAdapter: BaseAdapter<*, *, *>?, recyclerviewDataset: List<BaseListItem>?, scrollToLast: Boolean) {
 
     var listAdapter = recyclerviewAdapter as BaseAdapter<ViewDataBinding, BaseListItem, Any>?
     val layoutManager = layoutManager as LinearLayoutManager
@@ -39,22 +38,6 @@ fun RecyclerView.setRecyclerAdapter(recyclerviewAdapter: BaseAdapter<*, *, *>?, 
 
                     if (lastVisiblePosition == itemCount - 1) {
                         it.onListScrolledToEnd(itemCount - 1)
-                    }
-
-                    fab?.let {
-
-                        if (dy > 0) {
-
-                            if (fab.isShown) {
-                                fab.hide()
-                            }
-                        }
-                        else if (dy < 0) {
-
-                            if (!fab.isShown) {
-                                fab.show()
-                            }
-                        }
                     }
                 }
             })

@@ -42,11 +42,11 @@ class TrucksUseCase @Inject constructor(private val trucksRepository: TrucksRepo
     }
     .flowOn(coroutineDispatcherProvider.IO())
 
-    private suspend fun getDataFromLocal(): ArrayList<TruckModel> {
+    suspend fun getDataFromLocal(): ArrayList<TruckModel> {
         return trucksRepository.getDataFromLocal()
     }
 
-    private suspend fun getDataFromNetwork(): ArrayList<TruckModel> {
+    suspend fun getDataFromNetwork(): ArrayList<TruckModel> {
         return trucksRepository.getDataFromNetwork()
     }
 
@@ -57,7 +57,7 @@ class TrucksUseCase @Inject constructor(private val trucksRepository: TrucksRepo
         }
     }
 
-    private fun deleteAllData() {
+    fun deleteAllData() {
         CoroutineScope(coroutineDispatcherProvider.IO()).launch {
             trucksRepository.purgeData()
         }

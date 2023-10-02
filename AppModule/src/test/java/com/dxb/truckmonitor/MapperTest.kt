@@ -13,29 +13,24 @@ import com.google.gson.reflect.TypeToken
 import org.junit.Assert
 import org.junit.Test
 
-
 class MapperTest {
-
-    private val truckResponseStr = "[{\"plateNo\":\"X 19599\",\"driverName\":\"Wyatt Liam\",\"lat\":25.357119,\"lng\":55.391068,\"location\":\"Rolla, Sharjah, the UAE\",\"imageURL\":\"https://i.picsum.photos/id/583/200/300.jpg\",\"lastUpdated\":\"2023-10-01T19:10:11+00:00\"}]"
-    private val truckModelStr = "[{\"plateNo\":\"X 19599\",\"driverName\":\"Wyatt Liam\",\"lat\":25.357119,\"lng\":55.391068,\"location\":\"Rolla, Sharjah, the UAE\",\"imageURL\":\"https://i.picsum.photos/id/583/200/300.jpg\",\"lastUpdated\":1696187411000}]"
-    private val truckEntityStr = "[{\"plateNo\":\"X 19599\",\"driverName\":\"Wyatt Liam\",\"lat\":25.357119,\"lng\":55.391068,\"location\":\"Rolla, Sharjah, the UAE\",\"imageURL\":\"https://i.picsum.photos/id/583/200/300.jpg\",\"lastUpdated\":1696187411000}]"
 
     @Test
     fun testResponseToModelMapper() {
 
-        val truckResponseModelList: ArrayList<TruckResponseModel> = Gson().fromJson(truckResponseStr,
+        val truckResponseModelList: ArrayList<TruckResponseModel> = Gson().fromJson(DataStore.truckResponseStr,
             object : TypeToken<ArrayList<TruckResponseModel>>() {}.type)
 
         val truckModelList = truckResponseModelList.toModelList(SessionContext())
         val truckModelListJson = Gson().toJson(truckModelList)
 
-        Assert.assertEquals(true, truckModelListJson.equals(truckModelStr))
+        Assert.assertEquals(true, truckModelListJson.equals(DataStore.truckModelStr))
     }
 
     @Test
     fun testModelToEntityMapper() {
 
-        val truckModelList: ArrayList<TruckModel> = Gson().fromJson(truckModelStr,
+        val truckModelList: ArrayList<TruckModel> = Gson().fromJson(DataStore.truckModelStr,
             object : TypeToken<ArrayList<TruckModel>>() {}.type)
 
         val truckEntityList = truckModelList.toEntityList()
@@ -53,7 +48,7 @@ class MapperTest {
     @Test
     fun testEntityToModelMapper() {
 
-        val truckEntityList: ArrayList<TruckEntity> = Gson().fromJson(truckEntityStr,
+        val truckEntityList: ArrayList<TruckEntity> = Gson().fromJson(DataStore.truckEntityStr,
             object : TypeToken<ArrayList<TruckEntity>>() {}.type)
 
         val truckModelList = truckEntityList.toModelList(SessionContext())
