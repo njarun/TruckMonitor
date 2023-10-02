@@ -33,11 +33,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>() {
     }
 
     override fun handleVMInteractions(interaction: Interactor): Boolean {
-        when(interaction) {
-            is OnSuccess -> {
-                return super.handleVMInteractions(OpenNextScreen(DashboardActivity::class.java))
-            }
-        }
+        when(interaction) { is OnSuccess -> return super.handleVMInteractions(OpenNextScreen(DashboardActivity::class.java)) }
         return super.handleVMInteractions(interaction)
     }
 }

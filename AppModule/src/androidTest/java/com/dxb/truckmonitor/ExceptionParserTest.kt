@@ -15,7 +15,7 @@ import java.net.UnknownHostException
 class ExceptionParserTest {
 
     @Test
-    fun SimulateExceptions() {
+    fun simulateExceptions() {
 
         Assert.assertEquals(R.string.server_connection_error, ExceptionParser.getMessage(SocketTimeoutException()))
         Assert.assertEquals(R.string.server_connection_error, ExceptionParser.getMessage(UnknownHostException()))

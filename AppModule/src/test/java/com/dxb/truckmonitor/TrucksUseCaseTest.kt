@@ -67,8 +67,8 @@ class TrucksUseCaseTest {
                         }
                         else if (it is Int) { //No data found string reference
 
-                            Assert.assertEquals(it, R.string.no_data_found)
                             trucksUsecase.deleteAllData()
+                            Assert.assertEquals(it, R.string.no_data_found)
                         }
                         else if(it is Exception) {
 

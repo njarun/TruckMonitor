@@ -36,9 +36,7 @@ class TrucksUseCase @Inject constructor(private val trucksRepository: TrucksRepo
                 emit(R.string.no_data_found)
             }
         }
-        catch (exception: Exception) {
-            emit(exception)
-        }
+        catch (exception: Exception) { emit(exception) }
     }
     .flowOn(coroutineDispatcherProvider.IO())
 
@@ -50,7 +48,7 @@ class TrucksUseCase @Inject constructor(private val trucksRepository: TrucksRepo
         return trucksRepository.getDataFromNetwork()
     }
 
-    private fun deleteAndSaveAllData(truckList: ArrayList<TruckModel>) {
+    fun deleteAndSaveAllData(truckList: ArrayList<TruckModel>) {
         CoroutineScope(coroutineDispatcherProvider.IO()).launch {
             trucksRepository.purgeData()
             trucksRepository.saveData(truckList)

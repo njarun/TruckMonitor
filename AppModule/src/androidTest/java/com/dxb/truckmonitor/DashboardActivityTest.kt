@@ -6,7 +6,10 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
+import androidx.test.platform.app.InstrumentationRegistry
 import com.dxb.truckmonitor.presentation.dashboard.DashboardActivity
+import com.dxb.truckmonitor.utils.Utility
+import org.junit.Assert
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -21,6 +24,8 @@ class DashboardActivityTest {
 
     @Test
     fun mainActivityTest() {
-
+        val appContext = InstrumentationRegistry.getInstrumentation().targetContext
+        if(Utility.isNetworkAvailable(appContext))
+            Assert.assertEquals(true, Utility.isNetworkAvailable(appContext))
     }
 }

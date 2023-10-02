@@ -39,10 +39,7 @@ object Utility {
                 window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
             }
         }
-        catch (e: Exception) {
-
-            e.printStackTrace()
-        }
+        catch (ignored: Exception) { }
     }
 
     fun isNetworkAvailable(context: Context): Boolean {
