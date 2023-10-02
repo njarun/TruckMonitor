@@ -68,7 +68,7 @@ class DashboardViewModelTest {
 
         TimeUnit.SECONDS.sleep(5)
 
-        Assert.assertEquals(null, viewModel.truckList.value)
+        Assert.assertEquals(trucksList.size, viewModel.truckList.value?.size)
     }
 
     private fun createTrucksList(startId: Long): ArrayList<TruckModel> {

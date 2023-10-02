@@ -29,6 +29,10 @@ jobs:
           distribution: "zulu"
           java-version: 11
 
+       # Execute build and invoke tests
+      - name: Build debug
+        run: bash ./gradlew build jacocoTestReport assembleAndroidTest test
+
        # Execute unit tests
       - name: Unit Test with Android Emulator Runner
         uses: reactivecircus/android-emulator-runner@v2
