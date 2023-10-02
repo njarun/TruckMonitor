@@ -1,5 +1,6 @@
 package com.dxb.truckmonitor.domain.usecase
 
+import com.dxb.truckmonitor.R
 import com.dxb.truckmonitor.data.router.CoroutineDispatcherProvider
 import com.dxb.truckmonitor.domain.router.dto.model.TruckModel
 import com.dxb.truckmonitor.domain.router.repository.TrucksRepository
@@ -30,6 +31,10 @@ class TrucksUseCase @Inject constructor(private val trucksRepository: TrucksRepo
                 deleteAndSaveAllData(trucksNetworkList)
                 emit(trucksNetworkList)
             }
+            else if(trucksNetworkList.isEmpty()) { //if empty data from BE
+                deleteAllData()
+                emit(R.string.no_data_found)
+            }
         }
         catch (exception: Exception) {
             emit(exception)
@@ -49,6 +54,12 @@ class TrucksUseCase @Inject constructor(private val trucksRepository: TrucksRepo
         CoroutineScope(coroutineDispatcherProvider.IO()).launch {
             trucksRepository.purgeData()
             trucksRepository.saveData(truckList)
+        }
+    }
+
+    private fun deleteAllData() {
+        CoroutineScope(coroutineDispatcherProvider.IO()).launch {
+            trucksRepository.purgeData()
         }
     }
 }

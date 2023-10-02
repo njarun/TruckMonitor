@@ -35,6 +35,10 @@ open class BaseViewModel : ViewModel() {
         emitAction(ShowToast(message))
     }
 
+    fun postMessage(message: Int) {
+        emitAction(ShowToast(message))
+    }
+
     override fun onCleared() {
         super.onCleared()
         subscriptions.clear()

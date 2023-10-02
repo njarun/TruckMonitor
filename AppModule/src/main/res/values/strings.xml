@@ -11,7 +11,7 @@
     <string name="server_connection_error">Cannot connect to server!</string>
     <string name="error_while_processing">Error while processing</string>
     <string name="no_data_found">No data found</string>
-    <string name="no_internet_error">You do not have internet access</string>
+    <string name="no_internet_error">Your internet connection appears to be offline, please check.</string>
 
     <!-- Exceptions -->
     <string name="error_general">We are enhancing the systems, please try again in some time.</string>

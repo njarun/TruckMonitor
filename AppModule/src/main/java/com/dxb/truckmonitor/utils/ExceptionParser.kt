@@ -14,7 +14,8 @@ object ExceptionParser {
             exception is UnknownHostException ||
             exception is ConnectException ||
             exception is SocketException ||
-            exception is ErrnoException) {
+            exception is ErrnoException ||
+            exception.message?.equals("android_getaddrinfo failed", true) == true) {
             R.string.server_connection_error
         }
         else {

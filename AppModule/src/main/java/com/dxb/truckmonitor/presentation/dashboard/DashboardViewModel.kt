@@ -48,6 +48,12 @@ class DashboardViewModel @Inject constructor(private val trucksUseCase: TrucksUs
                     if (it is Boolean) {
                         _viewRefreshState.postValue(it)
                     }
+                    else if (it is Int) {
+                        _viewRefreshState.postValue(false)
+                        _truckList.value = ArrayList()
+                        truckData = ArrayList()
+                        postMessage(it)
+                    }
                     else if(it is Exception) {
                         _viewRefreshState.postValue(false)
                         it.printStackTrace()
@@ -75,11 +81,13 @@ class DashboardViewModel @Inject constructor(private val trucksUseCase: TrucksUs
 
     fun sortTruckList() {
         sessionContext.updateFeedSortOrder()
-        truckList.value?.let {
-            _truckList.value = truckData.reversed() as ArrayList<TruckModel>
-            truckData = _truckList.value as ArrayList<TruckModel>
-            if(searchQuery.isNotEmpty())
-                filterTrucks()
+        if(truckList.value != null && truckList.value?.isNotEmpty() == true) {
+            truckList.value?.isNotEmpty().let {
+                _truckList.value = truckData.reversed() as ArrayList<TruckModel>
+                truckData = _truckList.value as ArrayList<TruckModel>
+                if (searchQuery.isNotEmpty())
+                    filterTrucks()
+            }
         }
     }
 
@@ -97,13 +105,14 @@ class DashboardViewModel @Inject constructor(private val trucksUseCase: TrucksUs
     }
 
     private fun filterTrucks() {
-        _truckList.value = if(searchQuery.trim().isEmpty())
-            truckData
-        else truckData.filter {
-
-            it.plateNo.contains(searchQuery, true)
-                    || it.driverName?.contains(searchQuery, true) == true
-                    || it.location?.contains(searchQuery, true) == true
-        } as ArrayList<TruckModel>
+        if(truckList.value != null && truckList.value?.isNotEmpty() == true) {
+            _truckList.value = if(searchQuery.trim().isEmpty())
+                truckData
+            else truckData.filter {
+                it.plateNo.contains(searchQuery, true)
+                        || it.driverName?.contains(searchQuery, true) == true
+                        || it.location?.contains(searchQuery, true) == true
+            } as ArrayList<TruckModel>
+        }
     }
 }
