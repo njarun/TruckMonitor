@@ -34,12 +34,6 @@ abstract class BaseAdapter<BINDING : ViewDataBinding, T : BaseListItem, itemList
         notifyDataSetChanged()
     }
 
-    fun getItemForPos(position: Int) : BaseListItem? {
-        if(data.size > position)
-            return data[position]
-        else return null
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<BINDING> {
 
         val binder = DataBindingUtil.inflate<BINDING>(

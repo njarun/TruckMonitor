@@ -15,8 +15,8 @@ import org.junit.Test
 
 class MapperTest {
 
-    @Test
-    fun testResponseToModelMapper() {
+    @Test()
+    fun testTruckResponseModelMapper() {
 
         val truckResponseModelList: ArrayList<TruckResponseModel> = Gson().fromJson(DataStore.truckResponseStr,
             object : TypeToken<ArrayList<TruckResponseModel>>() {}.type)
@@ -28,7 +28,7 @@ class MapperTest {
     }
 
     @Test
-    fun testModelToEntityMapper() {
+    fun testTruckModelEntityMapper() {
 
         val truckModelList: ArrayList<TruckModel> = Gson().fromJson(DataStore.truckModelStr,
             object : TypeToken<ArrayList<TruckModel>>() {}.type)
@@ -46,7 +46,7 @@ class MapperTest {
     }
 
     @Test
-    fun testEntityToModelMapper() {
+    fun testTruckEntityModelMapper() {
 
         val truckEntityList: ArrayList<TruckEntity> = Gson().fromJson(DataStore.truckEntityStr,
             object : TypeToken<ArrayList<TruckEntity>>() {}.type)
@@ -66,7 +66,7 @@ class MapperTest {
     }
 
     @Test
-    fun testTruckTimeParser() {
+    fun testGetDatePrettied() {
 
         Assert.assertEquals(true,Utility.parseDateStringToMilliseconds("2023-10-01T19:10:11+00:00") == 1696187411000)
 

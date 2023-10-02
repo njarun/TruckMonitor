@@ -9,7 +9,6 @@ import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 
 @Suppress("UNCHECKED_CAST")
@@ -18,7 +17,6 @@ abstract class BaseFragment<T, VM : BaseViewModel> : Fragment() {
     private lateinit var mActivity: BaseActivity<*, *>
 
     private lateinit var vmOperationsDisposible: Disposable
-    private val subscriptions = CompositeDisposable()
 
     private var viewBinding: ViewBinding? = null
     private var toast: Toast? = null
@@ -54,17 +52,12 @@ abstract class BaseFragment<T, VM : BaseViewModel> : Fragment() {
         super.onDestroyView()
         viewBinding = null
         vmOperationsDisposible.dispose()
-        subscriptions.dispose()
     }
 
     fun getViewBinding(): T = viewBinding as T
 
     open fun handleVMInteractions(interaction: Interactor): Boolean {
         return handleVMInteractions(mActivity, interaction)
-    }
-
-    fun addSubscriptions(disposable: Disposable) {
-        subscriptions.add(disposable)
     }
 
     protected fun showToast(@StringRes stringRes: Int) {
