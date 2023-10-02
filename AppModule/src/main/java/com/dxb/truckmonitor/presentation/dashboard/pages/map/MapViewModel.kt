@@ -53,6 +53,8 @@ class MapViewModel @Inject constructor(): BaseViewModel(), BaseItemListener {
 
         googleMap?.let {
 
+            currentMarker?.remove()
+
             if(displayTruckList.value == null || displayTruckList.value?.isEmpty() == true) {
                 return@let
             }
@@ -62,8 +64,6 @@ class MapViewModel @Inject constructor(): BaseViewModel(), BaseItemListener {
 
             val truckModel = displayTruckList.value!![currentIndex]
             val latLng = LatLng(truckModel.lat, truckModel.lng)
-
-            currentMarker?.remove()
 
             val markerOptions = MarkerOptions()
                 .position(latLng)

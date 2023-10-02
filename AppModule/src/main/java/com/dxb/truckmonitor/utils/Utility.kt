@@ -53,12 +53,15 @@ object Utility {
 
     @JvmStatic
     fun getDatePrettied(date: Long): String {
+        return getDatePrettied(date, System.currentTimeMillis())
+    }
 
-        val mDate = System.currentTimeMillis()
+    @JvmStatic
+    fun getDatePrettied(date: Long, compareDate: Long): String {
 
-        if (date in 1 until mDate) {
+        if (date in 1 until compareDate || date == compareDate) {
 
-            val difference = mDate - date
+            val difference = compareDate - date
             val seconds = difference / 1000
             val minutes = seconds / 60
             val hours = minutes / 60
@@ -66,7 +69,7 @@ object Utility {
             val months = days / 31
             val years = days / 365
 
-            return if (seconds < 0) {
+            return if (seconds == 0L) {
                 "Just now"
             }
             else if (seconds < 60) {
@@ -91,7 +94,7 @@ object Utility {
                 "$days days ago"
             }
             else if (seconds < 31104000) { // 12 * 30 * 24 * 60 * 60
-                if (months <= 1) "One month ago" else "$days months ago"
+                if (months <= 1) "One month ago" else "$months months ago"
             }
             else {
                 if (years <= 1)"One year ago" else "$years years ago"
@@ -107,7 +110,7 @@ object Utility {
         var milliseconds = 0L
 
         dateStr?.let {
-            val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ", Locale.ENGLISH)
+            val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX", Locale.ENGLISH)
             val date = simpleDateFormat.parse(dateStr)
             milliseconds = date?.time ?: 0
         }

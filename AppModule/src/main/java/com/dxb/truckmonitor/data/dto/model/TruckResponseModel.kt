@@ -2,8 +2,7 @@ package com.dxb.truckmonitor.data.dto.model
 
 import com.dxb.truckmonitor.presentation.base.adapters.BaseListItem
 
-class TruckResponseModel(
-    val plateNo: String, //"X 19599"
+class TruckResponseModel(val plateNo: String, //"X 19599"
     val driverName: String?, //"Wyatt Liam"
     val lat: Double, //25.357119
     val lng: Double, //55.391068
