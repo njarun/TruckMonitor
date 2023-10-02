@@ -1,6 +1,8 @@
 package com.dxb.truckmonitor.presentation.base
 
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.Spanned
 import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
@@ -52,6 +54,10 @@ abstract class BaseActivity<T, VM : BaseViewModel> : AppCompatActivity() {
     }
 
     fun showToast(message: String) {
+        showToast(SpannableString(message))
+    }
+
+    fun showToast(message: Spanned) {
 
         hideToast()
 

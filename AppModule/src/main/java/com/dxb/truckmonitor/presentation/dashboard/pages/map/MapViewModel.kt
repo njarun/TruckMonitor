@@ -1,5 +1,6 @@
 package com.dxb.truckmonitor.presentation.dashboard.pages.map
 
+import android.text.Html
 import androidx.databinding.ObservableInt
 import androidx.lifecycle.MutableLiveData
 import com.dxb.truckmonitor.Config
@@ -43,9 +44,7 @@ class MapViewModel @Inject constructor(): BaseViewModel(), BaseItemListener {
     }
 
     fun updateTruckList(truckList: ArrayList<TruckModel>) {
-
         displayTruckList.value = truckList
-
         scrollToPos.set(currentIndex)
         updateTruckLocation()
     }
@@ -78,5 +77,11 @@ class MapViewModel @Inject constructor(): BaseViewModel(), BaseItemListener {
     override fun onPageSelected(index: Int, item: BaseListItem) {
         currentIndex = index
         updateTruckLocation()
+    }
+
+    override fun onItemClicked(index: Int, item: BaseListItem) {
+        displayTruckList.value?.get(index)?.driverName?.let {
+            postMessage(Html.fromHtml("Selected: <big><b>$it</b></big>"))
+        }
     }
 }

@@ -1,5 +1,6 @@
 package com.dxb.truckmonitor.presentation.base
 
+import android.text.Spanned
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -36,6 +37,10 @@ open class BaseViewModel : ViewModel() {
     }
 
     fun postMessage(message: Int) {
+        emitAction(ShowToast(message))
+    }
+
+    fun postMessage(message: Spanned) {
         emitAction(ShowToast(message))
     }
 

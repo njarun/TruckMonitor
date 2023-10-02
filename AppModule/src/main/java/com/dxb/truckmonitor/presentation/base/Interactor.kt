@@ -2,6 +2,7 @@ package com.dxb.truckmonitor.presentation.base
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Spanned
 import com.dxb.truckmonitor.R
 import com.dxb.truckmonitor.utils.ExceptionParser
 import com.dxb.truckmonitor.utils.Utility
@@ -33,6 +34,7 @@ fun handleVMInteractions(activity: BaseActivity<*, *>, interaction: Interactor):
             when (interaction.message) {
                 is Int -> activity.showToast(interaction.message)
                 is String -> activity.showToast(interaction.message)
+                is Spanned -> activity.showToast(interaction.message)
                 else -> activity.showToast(R.string.invalid_toast_msg)
             }
         }

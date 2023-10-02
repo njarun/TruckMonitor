@@ -81,7 +81,7 @@ class DashboardViewModel @Inject constructor(private val trucksUseCase: TrucksUs
 
     fun sortTruckList() {
         sessionContext.updateFeedSortOrder()
-        if(truckList.value != null && truckList.value?.isNotEmpty() == true) {
+        if(truckData.isNotEmpty()) {
             truckList.value?.isNotEmpty().let {
                 _truckList.value = truckData.reversed() as ArrayList<TruckModel>
                 truckData = _truckList.value as ArrayList<TruckModel>
@@ -105,7 +105,7 @@ class DashboardViewModel @Inject constructor(private val trucksUseCase: TrucksUs
     }
 
     private fun filterTrucks() {
-        if(truckList.value != null && truckList.value?.isNotEmpty() == true) {
+        if(truckData.isNotEmpty()) {
             _truckList.value = if(searchQuery.trim().isEmpty())
                 truckData
             else truckData.filter {
