@@ -31,7 +31,7 @@ jobs:
 
        # Execute build and invoke tests
       - name: Build debug
-        run: bash ./gradlew build assembleAndroidTest test connectedAndroidTest jacocoTestReport
+        run: bash ./gradlew build jacocoTestReport assembleAndroidTest test
 
        # Execute unit tests
       - name: Unit Test with Android Emulator Runner
