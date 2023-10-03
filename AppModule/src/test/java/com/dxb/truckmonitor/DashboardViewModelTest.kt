@@ -36,7 +36,7 @@ class DashboardViewModelTest {
     @Before
     fun setup() {
 
-        trucksUsecase = TrucksUseCase(trucksRepository, CoroutineDispatcherProvider())
+        trucksUsecase = TrucksUseCase(trucksRepository, SessionContext(), CoroutineDispatcherProvider())
     }
 
     @Test

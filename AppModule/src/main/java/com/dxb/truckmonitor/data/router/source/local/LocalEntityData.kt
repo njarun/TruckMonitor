@@ -12,7 +12,11 @@ class LocalEntityData @Inject constructor(private val truckDao: TruckDao,
                                           private val sessionContext: SessionContext): EntityData {
 
     override suspend fun getData(): ArrayList<TruckModel> {
-        return truckDao.readAll().toModelList(sessionContext)
+        return truckDao.readAll(sessionContext.feedSortOrder.ordinal).toModelList()
+    }
+
+    override suspend fun getData(searchQuery: String): ArrayList<TruckModel> {
+        return truckDao.readAll(searchQuery, sessionContext.feedSortOrder.ordinal).toModelList()
     }
 
     override suspend fun saveData(truckModelList: List<TruckModel>) {

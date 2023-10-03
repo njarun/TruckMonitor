@@ -5,7 +5,6 @@ import com.dxb.truckmonitor.data.dto.mapper.TruckEntityModelMapper.toModelList
 import com.dxb.truckmonitor.data.dto.mapper.TruckModelEntityMapper.toEntityList
 import com.dxb.truckmonitor.data.dto.mapper.TruckResponseModelMapper.toModelList
 import com.dxb.truckmonitor.data.dto.model.TruckResponseModel
-import com.dxb.truckmonitor.data.session.SessionContext
 import com.dxb.truckmonitor.domain.router.dto.model.TruckModel
 import com.dxb.truckmonitor.utils.Utility
 import com.google.gson.Gson
@@ -21,7 +20,7 @@ class MapperTest {
         val truckResponseModelList: ArrayList<TruckResponseModel> = Gson().fromJson(DataStore.truckResponseStr,
             object : TypeToken<ArrayList<TruckResponseModel>>() {}.type)
 
-        val truckModelList = truckResponseModelList.toModelList(SessionContext())
+        val truckModelList = truckResponseModelList.toModelList()
         val truckModelListJson = Gson().toJson(truckModelList)
 
         Assert.assertEquals(true, truckModelListJson.equals(DataStore.truckModelStr))
@@ -51,7 +50,7 @@ class MapperTest {
         val truckEntityList: ArrayList<TruckEntity> = Gson().fromJson(DataStore.truckEntityStr,
             object : TypeToken<ArrayList<TruckEntity>>() {}.type)
 
-        val truckModelList = truckEntityList.toModelList(SessionContext())
+        val truckModelList = truckEntityList.toModelList()
 
         Assert.assertEquals(true, truckEntityList.size > 0 && truckModelList.size == truckEntityList.size)
         Assert.assertEquals(true, truckModelList[0].plateNo == truckEntityList[0].plateNo)

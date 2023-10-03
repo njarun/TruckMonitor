@@ -6,6 +6,10 @@ interface EntityData {
 
     suspend fun getData(): ArrayList<TruckModel>
 
+    suspend fun getData(searchQuery: String): ArrayList<TruckModel> {
+        return ArrayList()
+    }
+
     suspend fun saveData(truckModelList: List<TruckModel>) {
 
     }

@@ -15,6 +15,10 @@ class TrucksRepositoryImpl @Inject constructor(dataFactory: DataFactory) : Truck
         return localRepo.getData()
     }
 
+    override suspend fun getDataFromLocal(searchQuery: String): ArrayList<TruckModel> {
+        return localRepo.getData(searchQuery)
+    }
+
     override suspend fun getDataFromNetwork(): ArrayList<TruckModel> {
         return networkRepo.getData()
     }

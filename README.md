@@ -24,9 +24,10 @@ Kotlin
 5. Usage of Jetpack components such as Room, NavGraph, View/DataBinding, ViewModel, LiveData...
 6. Kotlin Coroutines/Flow, Rx
 7. Kotlin List filters and sorting
-8. Unit and UI tests
-9. Optional Obfuscation
-10. Scalability
+8. Room query operations
+9. Unit, UI and Database tests
+10. Optional Obfuscation
+11. Scalability
 
 **Database used:**   
 [Room](https://developer.android.com/jetpack/androidx/releases/room)
@@ -47,7 +48,7 @@ Kotlin
 5. When there is a data update in the shared view model live data, its loaded to the List and Map UI
 6. The sort button in the action bar orders the list/map data in ascending or descending order.
 7. Users can search for the trucks with plate number, name and location.
-8. Up on search, the relevant results are updated to the List and Map views. 
+8. Up on search, the relevant results are queried from database to the List and Map views. 
 9. Listeners are attached to the truck items to process the user selections.
 
 ### Capabilities
@@ -58,8 +59,9 @@ Kotlin
 5. Functional/Method bindings for views
 6. Factory class structure for Local/Network data sources
 7. Room database is updated with API results for persistence
-8. Hilt for dependency injection
-9. Code coverage with CodeCov, check the codecov badge at the top to see the results.
+8. Search data from local Database with multiple conditions
+9. Hilt for dependency injection
+10. Code coverage with CodeCov, check the codecov badge at the top to see the results.
 
 ### Screenshots:
 <br>

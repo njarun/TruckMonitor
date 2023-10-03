@@ -11,6 +11,7 @@ import com.dxb.truckmonitor.domain.usecase.TrucksUseCase
 import com.dxb.truckmonitor.presentation.base.BaseViewModel
 import com.dxb.truckmonitor.presentation.base.OnException
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
@@ -22,9 +23,11 @@ class DashboardViewModel @Inject constructor(private val trucksUseCase: TrucksUs
 
     private val _truckList = MutableLiveData<ArrayList<TruckModel>>()
     val truckList: LiveData<ArrayList<TruckModel>> = _truckList
-    private var truckData = ArrayList<TruckModel>()
-    val hasData = ObservableBoolean()
+
+    val isUserActionsEnabled = ObservableBoolean()
     private var searchQuery = ""
+    private var fetchJob: Job? = null
+    private var searchJob: Job? = null
 
     init {
         pullTruckList()
@@ -32,7 +35,8 @@ class DashboardViewModel @Inject constructor(private val trucksUseCase: TrucksUs
 
     private fun pullTruckList() {
 
-        viewModelScope.launch {
+        fetchJob?.cancel()
+        fetchJob = viewModelScope.launch {
 
             try {
 
@@ -53,8 +57,6 @@ class DashboardViewModel @Inject constructor(private val trucksUseCase: TrucksUs
                     else if (it is Int) {
                         _viewRefreshState.postValue(false)
                         _truckList.value = ArrayList()
-                        truckData = ArrayList()
-                        hasData.set(false)
                         postMessage(it)
                     }
                     else if(it is Exception) {
@@ -63,10 +65,13 @@ class DashboardViewModel @Inject constructor(private val trucksUseCase: TrucksUs
                         emitAction(OnException(it))
                     }
                     else {
+
+                        isUserActionsEnabled.set(true)
                         _viewRefreshState.postValue(false)
-                        _truckList.value = it as ArrayList<TruckModel>
-                        truckData = _truckList.value as ArrayList<TruckModel>
-                        hasData.set(true)
+
+                        if(searchQuery.isNotBlank())
+                            searchTruckList()
+                        else _truckList.value = it as ArrayList<TruckModel>
                     }
                 }
             }
@@ -79,44 +84,52 @@ class DashboardViewModel @Inject constructor(private val trucksUseCase: TrucksUs
         }
     }
 
+    private fun searchTruckList() {
+
+        searchJob?.cancel()
+        searchJob = viewModelScope.launch {
+
+            try {
+
+                trucksUseCase.fetchTruckList(searchQuery).onStart {
+                    _viewRefreshState.postValue(true)
+                }
+                .catch {
+                    _viewRefreshState.postValue(false)
+                }
+                .collect {
+
+                    _viewRefreshState.postValue(false)
+                    _truckList.value = it
+                }
+            }
+            catch (error: Exception) {
+                _viewRefreshState.postValue(false)
+            }
+        }
+    }
+
     fun onRefresh() {
         pullTruckList()
     }
 
     fun sortTruckList() {
         sessionContext.updateFeedSortOrder()
-        if(truckData.isNotEmpty()) {
-            truckList.value?.isNotEmpty().let {
-                _truckList.value = truckData.reversed() as ArrayList<TruckModel>
-                truckData = _truckList.value as ArrayList<TruckModel>
-                if (searchQuery.isNotEmpty())
-                    filterTrucks()
-            }
+        truckList.value?.isNotEmpty().let {
+            _truckList.value = (truckList.value?.reversed() ?: ArrayList()) as ArrayList<TruckModel>
         }
     }
 
     val onQueryTextListener = object : SearchView.OnQueryTextListener {
 
-        override fun onQueryTextChange(newText: String?): Boolean {
-            searchQuery = newText ?: ""
-            filterTrucks()
+        override fun onQueryTextChange(searchText: String?): Boolean {
+            searchQuery = searchText ?: ""
+            searchTruckList()
             return false
         }
 
         override fun onQueryTextSubmit(query: String?): Boolean {
             return false
-        }
-    }
-
-    private fun filterTrucks() {
-        if(truckData.isNotEmpty()) {
-            _truckList.value = if(searchQuery.trim().isEmpty())
-                truckData
-            else truckData.filter {
-                it.plateNo.contains(searchQuery, true)
-                        || it.driverName?.contains(searchQuery, true) == true
-                        || it.location?.contains(searchQuery, true) == true
-            } as ArrayList<TruckModel>
         }
     }
 }

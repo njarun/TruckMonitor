@@ -3,6 +3,7 @@ package com.dxb.truckmonitor
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.dxb.truckmonitor.data.router.CoroutineDispatcherProvider
 import com.dxb.truckmonitor.data.router.repository.TrucksRepositoryImpl
+import com.dxb.truckmonitor.data.session.SessionContext
 import com.dxb.truckmonitor.domain.router.dto.model.TruckModel
 import com.dxb.truckmonitor.domain.usecase.TrucksUseCase
 import com.google.gson.Gson
@@ -38,7 +39,7 @@ class TrucksUseCaseTest {
     fun setup() {
 
         truckModelList = Gson().fromJson(DataStore.truckModelStr, object : TypeToken<ArrayList<TruckModel>>() {}.type)
-        trucksUsecase = TrucksUseCase(trucksRepository, CoroutineDispatcherProvider())
+        trucksUsecase = TrucksUseCase(trucksRepository, SessionContext(), CoroutineDispatcherProvider())
     }
 
     @Test
@@ -77,6 +78,58 @@ class TrucksUseCaseTest {
 
                             Assert.assertEquals(true, (it as ArrayList<TruckModel>).size == 1)
                         }
+                    }
+            }
+        }
+    }
+
+    @Test
+    fun `TrucksUse case with valid search query`() {
+
+        val searchQuery = "att"
+
+        runBlocking {
+
+            whenever(trucksUsecase.getDataFromLocal(searchQuery))
+                .thenReturn(truckModelList)
+
+            mainCoroutineRule.launch {
+
+                trucksUsecase.fetchTruckList(searchQuery).onStart {
+
+                    }
+                    .catch {
+
+                    }
+                    .collect {
+
+                        Assert.assertEquals(true, it.size == 1)
+                    }
+            }
+        }
+    }
+
+    @Test
+    fun `TrucksUse case with invalid search query`() {
+
+        val searchQuery = "not_a_valid_search"
+
+        runBlocking {
+
+            whenever(trucksUsecase.getDataFromLocal(searchQuery))
+                .thenReturn(truckModelList)
+
+            mainCoroutineRule.launch {
+
+                trucksUsecase.fetchTruckList(searchQuery).onStart {
+
+                }
+                    .catch {
+
+                    }
+                    .collect {
+
+                        Assert.assertEquals(true, it.size == 0)
                     }
             }
         }
