@@ -1,6 +1,7 @@
 package com.dxb.truckmonitor.presentation.dashboard
 
 import androidx.appcompat.widget.SearchView
+import androidx.databinding.ObservableBoolean
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -22,6 +23,7 @@ class DashboardViewModel @Inject constructor(private val trucksUseCase: TrucksUs
     private val _truckList = MutableLiveData<ArrayList<TruckModel>>()
     val truckList: LiveData<ArrayList<TruckModel>> = _truckList
     private var truckData = ArrayList<TruckModel>()
+    val hasData = ObservableBoolean()
     private var searchQuery = ""
 
     init {
@@ -52,6 +54,7 @@ class DashboardViewModel @Inject constructor(private val trucksUseCase: TrucksUs
                         _viewRefreshState.postValue(false)
                         _truckList.value = ArrayList()
                         truckData = ArrayList()
+                        hasData.set(false)
                         postMessage(it)
                     }
                     else if(it is Exception) {
@@ -63,6 +66,7 @@ class DashboardViewModel @Inject constructor(private val trucksUseCase: TrucksUs
                         _viewRefreshState.postValue(false)
                         _truckList.value = it as ArrayList<TruckModel>
                         truckData = _truckList.value as ArrayList<TruckModel>
+                        hasData.set(true)
                     }
                 }
             }

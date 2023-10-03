@@ -26,6 +26,7 @@
         <include
             android:id="@+id/action_bar"
             layout="@layout/action_bar_main"
+            app:isAllowed="@{viewModel.hasData}"
             app:baseViewModel="@{viewModel}"
             app:pageTitle="@{@string/dashboard_title}"
             app:queryTextListener="@{viewModel.onQueryTextListener}" />

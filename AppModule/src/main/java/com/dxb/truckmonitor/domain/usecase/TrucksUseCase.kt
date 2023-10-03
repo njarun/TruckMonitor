@@ -48,7 +48,7 @@ class TrucksUseCase @Inject constructor(private val trucksRepository: TrucksRepo
         return trucksRepository.getDataFromNetwork()
     }
 
-    fun deleteAndSaveAllData(truckList: ArrayList<TruckModel>) {
+    private fun deleteAndSaveAllData(truckList: ArrayList<TruckModel>) {
         CoroutineScope(coroutineDispatcherProvider.IO()).launch {
             trucksRepository.purgeData()
             trucksRepository.saveData(truckList)

@@ -69,7 +69,7 @@ class UserExperienceTest: AndroidJUnitRunner() {
 
         val appCompatImageView = onView(
             allOf(
-                withId(R.id.left_icon), withContentDescription("Sort trucks"),
+                withId(R.id.action_icon), withContentDescription("Sort trucks"),
                 childAtPosition(
                     allOf(
                         withId(R.id.action_bar_tool_bar),
@@ -169,7 +169,7 @@ class UserExperienceTest: AndroidJUnitRunner() {
 
         val appCompatImageView2 = onView(
             allOf(
-                withId(R.id.left_icon), withContentDescription("Sort trucks"),
+                withId(R.id.action_icon), withContentDescription("Sort trucks"),
                 childAtPosition(
                     allOf(
                         withId(R.id.action_bar_tool_bar),

@@ -11,6 +11,10 @@
             type="String" />
 
         <variable
+            name="isAllowed"
+            type="Boolean" />
+
+        <variable
             name="queryTextListener"
             type="androidx.appcompat.widget.SearchView.OnQueryTextListener" />
 
@@ -60,11 +64,12 @@
                 android:text="@{pageTitle}" />
 
             <ImageView
-                android:id="@+id/left_icon"
+                android:id="@+id/action_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:padding="10dp"
                 android:scaleY="1.3"
+                android:clickable="@{isAllowed}"
                 app:tint="@color/md_white_1000"
                 android:onClick="@{() -> baseViewModel.onRightAction()}"
                 android:layout_gravity="center_vertical|end"
@@ -80,7 +85,7 @@
             android:layout_marginBottom="20dp"
             app:queryHint="Search"
             app:iconifiedByDefault="false"
-            app:onQueryTextListener="@{queryTextListener}"
+            app:onQueryTextListener="@{isAllowed ? queryTextListener : null}"
             android:background="@drawable/search_bar_background"/>
 
     </com.google.android.material.appbar.AppBarLayout>
