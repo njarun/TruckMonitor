@@ -6,7 +6,7 @@ import android.view.MotionEvent
 import android.view.ViewConfiguration
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 
-class AppSwipeToRefresh(context: Context?, attrs: AttributeSet?) : SwipeRefreshLayout(context!!, attrs) {
+class AppSwipeToRefresh(context: Context, attrs: AttributeSet) : SwipeRefreshLayout(context, attrs) {
 
     private val mTouchSlop: Int
     private var mPrevX = 0f

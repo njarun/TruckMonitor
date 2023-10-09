@@ -29,8 +29,8 @@ jobs:
       - name: Setting Up JDK
         uses: actions/setup-java@v3
         with:
-          distribution: "zulu"
-          java-version: 11
+          distribution: "adopt"
+          java-version: 17
 
        # Execute tests
       - name: Execute Test cases with Android Emulator Runner
@@ -54,4 +54,4 @@ jobs:
       - name: Upload Test Report
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-        run:  bash <(curl -s https://codecov.io/bash) -f "AppModule/build/reports/coverage/androidTest/debug/report.xml"
+        run:  bash <(curl -s https://codecov.io/bash) -f "AppModule/build/reports/coverage/androidTest/debug/connected/report.xml"
