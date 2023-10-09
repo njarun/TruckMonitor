@@ -89,12 +89,12 @@ class UserExperienceTest: AndroidJUnitRunner() {
 
         val searchAutoComplete = onView(
             allOf(
-                withId(androidx.databinding.library.baseAdapters.R.id.search_src_text),
+                withId(androidx.appcompat.R.id.search_src_text),
                 childAtPosition(
                     allOf(
-                        withId(androidx.databinding.library.baseAdapters.R.id.search_plate),
+                        withId(androidx.appcompat.R.id.search_plate),
                         childAtPosition(
-                            withId(androidx.databinding.library.baseAdapters.R.id.search_edit_frame),
+                            withId(androidx.appcompat.R.id.search_edit_frame),
                             1
                         )
                     ),
@@ -109,13 +109,13 @@ class UserExperienceTest: AndroidJUnitRunner() {
 
         val searchAutoComplete2 = onView(
             allOf(
-                withId(androidx.databinding.library.baseAdapters.R.id.search_src_text),
+                withId(androidx.appcompat.R.id.search_src_text),
                 withText("Mat"),
                 childAtPosition(
                     allOf(
-                        withId(androidx.databinding.library.baseAdapters.R.id.search_plate),
+                        withId(androidx.appcompat.R.id.search_plate),
                         childAtPosition(
-                            withId(androidx.databinding.library.baseAdapters.R.id.search_edit_frame),
+                            withId(androidx.appcompat.R.id.search_edit_frame),
                             1
                         )
                     ),
@@ -206,13 +206,13 @@ class UserExperienceTest: AndroidJUnitRunner() {
 
         val appCompatImageView3 = onView(
             allOf(
-                withId(androidx.databinding.library.baseAdapters.R.id.search_close_btn),
+                withId(androidx.appcompat.R.id.search_close_btn),
                 withContentDescription("Clear query"),
                 childAtPosition(
                     allOf(
-                        withId(androidx.databinding.library.baseAdapters.R.id.search_plate),
+                        withId(androidx.appcompat.R.id.search_plate),
                         childAtPosition(
-                            withId(androidx.databinding.library.baseAdapters.R.id.search_edit_frame),
+                            withId(androidx.appcompat.R.id.search_edit_frame),
                             1
                         )
                     ), 1
