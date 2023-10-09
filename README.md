@@ -18,7 +18,7 @@ Clean - MVVM
 Kotlin
 
 **Project Highlights:**
-1. 73% code coverage - [[Details]](https://codecov.io/gh/njarun/TruckMonitor)
+1. 79% code coverage - [[Details]](https://codecov.io/gh/njarun/TruckMonitor)
 2. Focussed on SOLID principles | Clean - MVVM Architecture
 3. Object oriented programming approach
 4. DI using Hilt

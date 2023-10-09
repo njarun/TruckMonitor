@@ -52,10 +52,8 @@ android {
             useSupportLibrary true
         }
 
-        kapt {
-            arguments {
-                arg("room.schemaLocation", "$projectDir/schemas")
-            }
+        ksp {
+            arg("room.schemaLocation", "$projectDir/schemas")
         }
 
         buildFeatures {
