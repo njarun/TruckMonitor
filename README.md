@@ -5,8 +5,8 @@
 ### Implementation:
 A tracking application to monitor the location of company trucks. Truck details are showed in List and Map views.
 
-**APK Link:**    
-Download from [here](https://drive.neptunelabs.xyz/s/TruckMonitorApp/download?path=%2F&files=TruckMonitor.apk)   
+**Links:**    
+Download APK from [here](https://drive.neptunelabs.xyz/s/TruckMonitorApp/download?path=%2F&files=TruckMonitor.apk)   
 Screens from [here](https://drive.neptunelabs.xyz/s/TruckMonitorApp)
 <br>[Demo Video<br><img src="https://drive.neptunelabs.xyz/s/TruckMonitorApp/download?path=%2F&files=List.jpeg" width="180" height="380">](https://drive.neptunelabs.xyz/s/TruckMonitorAppDemo)
 
