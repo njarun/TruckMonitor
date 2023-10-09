@@ -57,4 +57,4 @@ jobs:
       - name: Upload Test Report
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-        run:  bash <(curl -s https://codecov.io/bash) -f "AppModule/build/reports/coverage/androidTest/debug/report.xml"
+        run:  bash <(curl -s https://codecov.io/bash) -f "AppModule/build/reports/coverage/androidTest/debug/connected/report.xml"
